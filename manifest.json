@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
+	"id": "obsidian-pacer-plans",
+	"name": "Obsidian Pacer Plans",
+	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Pace out your tasks and plans in Obsidian.",
+	"author": "Ky Kartchner",
+	"authorUrl": "https://github.com/kkartch0",
 	"isDesktopOnly": false
 }
