@@ -1,6 +1,6 @@
 import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 import { PacerPlanSettingsTab } from './PacerPlanSettingsTab';
-import { SampleModal } from './SampleModal';
+import { PacerPlanEditCreateModal } from './PacerPlanEditCreateModal';
 
 // Remember to rename these classes and interfaces!
 
@@ -32,10 +32,10 @@ export default class PacerPlansPlugin extends Plugin {
 
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
+			id: 'create-new-pacer-plan',
+			name: 'Create new Pacer Plan',
 			callback: () => {
-				new SampleModal(this.app).open();
+				new PacerPlanEditCreateModal(this.app).open();
 			}
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
