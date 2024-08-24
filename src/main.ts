@@ -36,7 +36,12 @@ export default class PacerPlansPlugin extends Plugin {
 			name: 'Create new Pacer Plan',
 			callback: () => {
 				new PacerPlanEditCreateModal(this.app, (result) => {
-					console.log(result);
+					result.generateTasks();
+
+					let resultString = result.toString();
+					console.log("Pacer Plan:")
+					console.log(resultString);
+
 				}).open();
 			}
 		});

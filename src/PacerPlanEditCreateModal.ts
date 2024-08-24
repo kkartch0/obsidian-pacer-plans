@@ -1,6 +1,6 @@
 import { Modal, App, Setting } from "obsidian";
 import { PacerPlan } from "./PacerPlan";
-import { Days } from "./Days";
+import { Days, shortStringToDays } from "./Days";
 
 export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
@@ -59,7 +59,7 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text.onChange(
 					(value) =>
-						(this.result.actionDays = BinaryStringToDays(value))
+						(this.result.actionDays = shortStringToDays(value))
 				)
 			);
 
@@ -93,8 +93,4 @@ export class PacerPlanEditCreateModal extends Modal {
 		const { contentEl } = this;
 		contentEl.empty();
 	}
-}
-
-function BinaryStringToDays(binaryString: string): Days {
-	return <Days>Number.parseInt(binaryString, 2);
 }
