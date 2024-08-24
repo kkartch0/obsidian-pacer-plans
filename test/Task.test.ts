@@ -2,12 +2,13 @@ import { Task } from "../src/Task";
 
 describe("toString", () => {
     it("should return the correct string representation of the task", () => {
-        const task = new Task();
-        task.description = "Sample Task";
-        task.startPoint = 100;
-        task.endPoint = 200;
-        task.scheduledDate = new Date("2022-01-01");
-        task.completed = false;
+        const task = new Task({
+            description: "Sample Task",
+            startPoint: 100,
+            endPoint: 200,
+            scheduledDate: new Date("2022-01-01"),
+            completed: false
+        });
 
         const result = task.toString();
 
@@ -15,12 +16,13 @@ describe("toString", () => {
     });
 
     it("should return the correct string representation when the task is completed", () => {
-        const task = new Task();
-        task.description = "Completed Task";
-        task.startPoint = 50;
-        task.endPoint = 100;
-        task.scheduledDate = new Date("2022-02-01");
-        task.completed = true;
+        const task = new Task({
+            description: "Completed Task",
+            startPoint: 50,
+            endPoint: 100,
+            scheduledDate: new Date("2022-02-01"),
+            completed: true
+        });
 
         const result = task.toString();
 

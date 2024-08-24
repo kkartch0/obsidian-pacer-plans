@@ -5,6 +5,26 @@ export class Task {
     scheduledDate: Date;
     completed: boolean;
 
+    constructor({
+        description,
+        startPoint,
+        endPoint,
+        scheduledDate,
+        completed
+    }: {
+        description: string;
+        startPoint: number;
+        endPoint: number;
+        scheduledDate: Date;
+        completed: boolean;
+    }) {
+        this.description = description;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.scheduledDate = scheduledDate;
+        this.completed = completed;
+    }
+
     /**
      * Returns a string representation of the Task object.
      * 

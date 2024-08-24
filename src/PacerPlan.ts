@@ -1,5 +1,5 @@
 import { calculateAvailableActionDates } from "./dateHelper";
-import { Days } from "./Days";
+import { Days, daysToShortString } from "./Days";
 import { GetEndPoint } from "./PacerPlan.helper";
 import { Task } from "./Task";
 
@@ -41,5 +41,21 @@ export class PacerPlan {
 
         this.tasks = tasks;
         return tasks;
+    }
+
+    toString(): string {
+        let tasksString = this.tasks.map(task => task.toString()).join("\n");
+
+        return `---
+title: ${this.title}
+summary: ${this.summary}
+startDate: ${this.startDate.toISOString().slice(0, 10)}
+endDate: ${this.endDate.toISOString().slice(0, 10)}
+actionDays: ${daysToShortString(this.actionDays)}
+totalPoints: ${this.totalPoints}
+---
+
+${tasksString}
+`;
     }
 }
