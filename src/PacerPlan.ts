@@ -12,6 +12,33 @@ export class PacerPlan {
     totalPoints: number;
     tasks: Task[];
 
+
+    constructor(
+        {
+            title,
+            summary,
+            startDate,
+            endDate,
+            actionDays,
+            totalPoints,
+            tasks
+        }: {
+            title?: string,
+            summary?: string,
+            startDate?: Date,
+            endDate?: Date,
+            actionDays?: Days,
+            totalPoints?: number, tasks?: Task[]
+        } = {}) {
+        this.title = title || "";
+        this.summary = summary || "";
+        this.startDate = startDate || new Date();
+        this.endDate = endDate || new Date();
+        this.actionDays = actionDays || Days.None;
+        this.totalPoints = totalPoints || 0;
+        this.tasks = tasks || [];
+    }
+
     /**
      * Generates tasks for the PacerPlan according to the action days, start date, end date, and total points.
      */
