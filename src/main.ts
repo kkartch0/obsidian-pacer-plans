@@ -42,6 +42,8 @@ export default class PacerPlansPlugin extends Plugin {
 					console.log("Pacer Plan:")
 					console.log(resultString);
 
+					// write string to new file using vault
+					this.app.vault.create(result.title + ".md", resultString);
 				}).open();
 			}
 		});

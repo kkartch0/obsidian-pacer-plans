@@ -13,6 +13,7 @@ export class PacerPlanEditCreateModal extends Modal {
 
 	onOpen() {
 		this.result = new PacerPlan();
+		this.result.actionDays = Days.Everyday;
 
 		const { contentEl } = this;
 		contentEl.createEl("h1", { text: "New Pacer Plan" });
@@ -40,6 +41,7 @@ export class PacerPlanEditCreateModal extends Modal {
 						this.result.startDate = new Date(value);
 					})
 					.setPlaceholder("YYYY-MM-DD")
+					.setValue(new Date().toISOString().split("T")[0])
 			);
 
 		new Setting(contentEl)
@@ -55,12 +57,13 @@ export class PacerPlanEditCreateModal extends Modal {
 
 		new Setting(contentEl)
 			.setName("Action Days")
-			.setDesc("The days of the week the plan is active.")
+			.setDesc("The days of the week the plan is active. U = Sunday, M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday, S = Saturday.")
 			.addText((text) =>
 				text.onChange(
 					(value) =>
 						(this.result.actionDays = shortStringToDays(value))
 				)
+				.setPlaceholder("UMTWRFS")
 			);
 
 		new Setting(contentEl)
