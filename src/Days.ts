@@ -67,3 +67,41 @@ export function daysToShortString(days: Days): string {
 
     return result;
 }
+
+/**
+ * Converts a short string representation of days to a Days enum value.
+ * 
+ * @param shortString - The short string representation of days.
+ * @returns The corresponding Days enum value.
+ */
+export function shortStringToDays(shortString: string): Days {
+    let result = Days.None;
+    for (let i = 0; i < shortString.length; i++) {
+        const char = shortString[i];
+        switch (char) {
+            case 'M':
+                result |= Days.Monday;
+                break;
+            case 'T':
+                result |= Days.Tuesday;
+                break;
+            case 'W':
+                result |= Days.Wednesday;
+                break;
+            case 'R':
+                result |= Days.Thursday;
+                break;
+            case 'F':
+                result |= Days.Friday;
+                break;
+            case 'S':
+                result |= Days.Saturday;
+                break;
+            case 'U':
+                result |= Days.Sunday;
+                break;
+        }
+    }
+
+    return result;
+}
