@@ -52,13 +52,13 @@ export class PacerPlan {
         availableActionDates.forEach((currentDate, index) => {
             const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, totalPoints: this.totalPoints });
 
-            tasks.push({
+            tasks.push(new Task({
                 description: this.title,
                 startPoint: currentPoint,
                 endPoint: endPoint,
                 scheduledDate: currentDate,
                 completed: false
-            });
+            }));
             currentPoint = endPoint + 1;
 
             if (remainingExtraPoints > 0) {

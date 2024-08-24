@@ -1,6 +1,7 @@
 import { Days } from "../src/Days";
 import { calculateAvailableActionDates } from "../src/dateHelper";
 import { PacerPlan } from "../src/PacerPlan";
+import { Task } from "../src/Task";
 
 describe("PacerPlan", () => {
     describe("generateTasks", () => {
@@ -51,42 +52,42 @@ describe("PacerPlan", () => {
 
             const result = plan.generateTasks();
 
-            expect(result).toEqual([
-                {
+            expect(result).toStrictEqual([
+                new Task({
                     description: "Math Problems",
                     startPoint: 1,
                     endPoint: 5,
                     scheduledDate: new Date(2024, 8, 2),
                     completed: false
-                },
-                {
+                }),
+                new Task({
                     description: "Math Problems",
                     startPoint: 6,
                     endPoint: 10,
                     scheduledDate: new Date(2024, 8, 3),
                     completed: false
-                },
-                {
+                }),
+                new Task({
                     description: "Math Problems",
                     startPoint: 11,
                     endPoint: 15,
                     scheduledDate: new Date(2024, 8, 4),
                     completed: false
-                },
-                {
+                }),
+                new Task({
                     description: "Math Problems",
                     startPoint: 16,
                     endPoint: 20,
                     scheduledDate: new Date(2024, 8, 5),
                     completed: false
-                },
-                {
+                }),
+                new Task({
                     description: "Math Problems",
                     startPoint: 21,
                     endPoint: 24,
                     scheduledDate: new Date(2024, 8, 6),
                     completed: false
-                },
+                }),
             ]);
         });
 
