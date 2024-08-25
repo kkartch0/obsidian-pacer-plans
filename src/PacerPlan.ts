@@ -5,7 +5,7 @@ import { Task } from "./Task";
 
 export class PacerPlan {
     title: string;
-    summary: string
+    summary: string;
     startDate: Date;
     endDate: Date;
     actionDays: Days;
@@ -44,8 +44,14 @@ export class PacerPlan {
      */
     generateTasks(): Task[] {
         const tasks: Task[] = [];
+
+        if (this.totalPoints <= 0) {
+            return tasks;
+        }
+
         const availableActionDates = calculateAvailableActionDates(this.startDate, this.endDate, this.actionDays);
         const wholePointsPerDay = Math.floor(this.totalPoints / availableActionDates.length);
+
         let remainingExtraPoints = this.totalPoints % availableActionDates.length;
         let currentPoint = 1;
 

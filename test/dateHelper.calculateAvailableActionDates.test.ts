@@ -12,6 +12,26 @@ describe("calculateAvailableActionDates", () => {
         expect(result).toEqual([]);
     });
 
+    it("should return an empty array if endDate is invalid or null", () => {
+        const startDate = new Date("2022-01-01");
+        const endDate = null;
+        const actionDays = Days.Monday | Days.Wednesday | Days.Friday;
+
+        const result = calculateAvailableActionDates(startDate, endDate, actionDays);
+
+        expect(result).toEqual([]);
+    });
+
+    it("should return an empty array if startDate is invalid or null", () => {
+        const startDate = null;
+        const endDate = new Date("2022-01-01");
+        const actionDays = Days.Monday | Days.Wednesday | Days.Friday;
+
+        const result = calculateAvailableActionDates(startDate, endDate, actionDays);
+
+        expect(result).toEqual([]);
+    });
+
     it("should return an array of available action days within the given range", () => {
         const startDate = new Date(2024, 7, 18);
         const endDate = new Date(2024, 7, 24);

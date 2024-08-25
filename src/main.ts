@@ -32,7 +32,8 @@ export default class PacerPlansPlugin extends Plugin {
 					console.log(resultString);
 
 					// write string to new file using vault
-					const planFile = await this.app.vault.create(result.title + ".md", resultString);
+					const fileName = result.title + ".md";
+					const planFile = await this.app.vault.create(fileName, resultString);
 
 					// open the newly created file
 					this.app.workspace.getLeaf("tab").openFile(planFile);

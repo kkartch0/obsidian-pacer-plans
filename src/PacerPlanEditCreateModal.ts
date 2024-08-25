@@ -13,6 +13,20 @@ export class PacerPlanEditCreateModal extends Modal {
 
 	onOpen() {
 		this.result = new PacerPlan();
+
+		const defaultFileName = "Untitled Plan";
+		this.result.title = defaultFileName;
+
+		let resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
+		let fileNumber = 2;
+
+		while (resultFile) {
+			this.result.title = defaultFileName + " " + fileNumber;
+			resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
+			fileNumber++;
+		}
+
+		this.result.startDate = new Date();
 		this.result.actionDays = Days.Everyday;
 
 		const { contentEl } = this;
@@ -23,6 +37,7 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setDesc("The name of the plan.")
 			.addText((text) =>
 				text.onChange((value) => (this.result.title = value))
+					.setPlaceholder(this.result.title)
 			);
 
 		new Setting(contentEl)

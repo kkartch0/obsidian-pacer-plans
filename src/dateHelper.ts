@@ -76,7 +76,12 @@ export function dayOfWeekToDaysEnum(dayOfWeek: number): Days {
  * @param actionDays - The action days.
  * @returns An array of available action days.
  */
-export function calculateAvailableActionDates(startDate: Date, endDate: Date, actionDays: Days): Date[] {
+export function calculateAvailableActionDates(startDate: Date | null, endDate: Date | null, actionDays: Days): Date[] {
+    // if either date is invalid or null, return an empty array
+    if (!startDate || !endDate || startDate > endDate) {
+        return [];
+    }
+
     const availableDays: Date[] = [];
     const currentDate = new Date(startDate);
 
