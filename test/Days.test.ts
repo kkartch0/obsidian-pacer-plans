@@ -18,7 +18,7 @@ describe("daysToShortString", () => {
 
     it("should return the correct short string for all days", () => {
         const result = daysToShortString(Days.Everyday);
-        expect(result).toEqual("MTWRFSU");
+        expect(result).toEqual("UMTWRFS");
     });
 });
 
@@ -39,7 +39,7 @@ describe("shortStringToDays", () => {
     });
 
     it("should return the correct Days enum value for all days", () => {
-        const result = shortStringToDays("MTWRFSU");
+        const result = shortStringToDays("UMTWRFS");
         expect(result).toEqual(Days.Everyday);
     });
 });

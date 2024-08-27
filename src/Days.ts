@@ -37,6 +37,10 @@ export enum Days {
  */
 export function daysToShortString(days: Days): string {
     let result = '';
+
+    if (isActionDay(Days.Sunday, days) ? 'U' : '') {
+        result += 'U';
+    }
     if (isActionDay(Days.Monday, days) ? 'M' : '') {
         result += 'M';
     }
@@ -59,10 +63,6 @@ export function daysToShortString(days: Days): string {
 
     if (isActionDay(Days.Saturday, days) ? 'S' : '') {
         result += 'S';
-    }
-
-    if (isActionDay(Days.Sunday, days) ? 'U' : '') {
-        result += 'U';
     }
 
     return result;
