@@ -16,7 +16,7 @@ import { Task } from "./Task";
  * startDate: 2024-08-19
  * endDate: 2024-08-23
  * actionDays: MTR
- * totalPoints: 352
+ * totalQuantity: 352
  * ---
 
  * - [x] Getting Things Done (1-118) ⏳ 2024-08-19
@@ -31,7 +31,7 @@ import { Task } from "./Task";
  * console.log(plan.startDate); // Output: "2024-08-19"
  * console.log(plan.endDate); // Output: "2024-08-23"
  * console.log(plan.actionDays); // Output: "MTR"
- * console.log(plan.totalPoints); // Output: 352
+ * console.log(plan.totalQuantity); // Output: 352
  * console.log(plan.tasks); // Output: [Task, Task, Task]
  */
 export function createPacerPlanFromString(
@@ -123,8 +123,8 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
         case "actionDays":
             plan.actionDays = shortStringToDays(value);
             break;
-        case "totalPoints":
-            plan.totalPoints = parseInt(value);
+        case "totalQuantity":
+            plan.totalQuantity = parseInt(value);
             break;
     }
 }

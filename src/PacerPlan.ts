@@ -9,7 +9,7 @@ export class PacerPlan {
     startDate: Date;
     endDate: Date;
     actionDays: Days;
-    totalPoints: number;
+    totalQuantity: number;
     tasks: Task[];
 
 
@@ -20,7 +20,7 @@ export class PacerPlan {
             startDate,
             endDate,
             actionDays,
-            totalPoints,
+            totalQuantity,
             tasks
         }: {
             title?: string,
@@ -28,14 +28,14 @@ export class PacerPlan {
             startDate?: Date,
             endDate?: Date,
             actionDays?: Days,
-            totalPoints?: number, tasks?: Task[]
+            totalQuantity?: number, tasks?: Task[]
         } = {}) {
         this.title = title || "";
         this.summary = summary || "";
         this.startDate = startDate || new Date();
         this.endDate = endDate || new Date();
         this.actionDays = actionDays || Days.None;
-        this.totalPoints = totalPoints || 0;
+        this.totalQuantity = totalQuantity || 0;
         this.tasks = tasks || [];
     }
 
@@ -45,18 +45,18 @@ export class PacerPlan {
     generateTasks(): Task[] {
         const tasks: Task[] = [];
 
-        if (this.totalPoints <= 0) {
+        if (this.totalQuantity <= 0) {
             return tasks;
         }
 
         const availableActionDates = calculateAvailableActionDates(this.startDate, this.endDate, this.actionDays);
-        const wholePointsPerDay = Math.floor(this.totalPoints / availableActionDates.length);
+        const wholePointsPerDay = Math.floor(this.totalQuantity / availableActionDates.length);
 
-        let remainingExtraPoints = this.totalPoints % availableActionDates.length;
+        let remainingExtraPoints = this.totalQuantity % availableActionDates.length;
         let currentPoint = 1;
 
         availableActionDates.forEach((currentDate, index) => {
-            const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, totalPoints: this.totalPoints });
+            const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, totalQuantity: this.totalQuantity });
 
             tasks.push(new Task({
                 description: this.title,
@@ -85,7 +85,7 @@ summary: ${this.summary}
 startDate: ${this.startDate.toISOString().slice(0, 10)}
 endDate: ${this.endDate.toISOString().slice(0, 10)}
 actionDays: ${daysToShortString(this.actionDays)}
-totalPoints: ${this.totalPoints}
+totalQuantity: ${this.totalQuantity}
 ---
 
 ${tasksString}

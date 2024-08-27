@@ -12,7 +12,7 @@ describe("PacerPlan", () => {
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
-            plan.totalPoints = 352;
+            plan.totalQuantity = 352;
 
             const result = plan.generateTasks();
 
@@ -48,7 +48,7 @@ describe("PacerPlan", () => {
             plan.startDate = new Date(2024, 8, 2);
             plan.endDate = new Date(2024, 8, 6);
             plan.actionDays = Days.Everyday;
-            plan.totalPoints = 24;
+            plan.totalQuantity = 24;
 
             const result = plan.generateTasks();
 
@@ -98,7 +98,7 @@ describe("PacerPlan", () => {
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Saturday | Days.Sunday;
-            plan.totalPoints = 352;
+            plan.totalQuantity = 352;
 
             const result = plan.generateTasks();
 
@@ -112,7 +112,7 @@ describe("PacerPlan", () => {
             plan.startDate = new Date("2022-01-07");
             plan.endDate = new Date("2022-01-01");
             plan.actionDays = Days.Monday | Days.Wednesday | Days.Friday;
-            plan.totalPoints = 352;
+            plan.totalQuantity = 352;
 
             const result = plan.generateTasks();
 

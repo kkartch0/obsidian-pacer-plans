@@ -82,14 +82,14 @@ export class PacerPlanEditCreateModal extends Modal {
 			);
 
 		new Setting(contentEl)
-			.setName("Total Points")
+			.setName("Total Quantity")
 			.setDesc(
-				"The total points to be completed. A point is a single unit such as a page to read, a paragraph to write, or a problem to solve."
+				"The total quantity to be completed. e.g. pages to read, paragraphs to write, or problems to solve, etc."
 			)
 			.addText((text) =>
 				text.onChange(
 					(value) =>
-						(this.result.totalPoints = Number.parseInt(value))
+						(this.result.totalQuantity = Number.parseInt(value))
 				)
 			);
 

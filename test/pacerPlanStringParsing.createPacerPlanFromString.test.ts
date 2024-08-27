@@ -10,7 +10,7 @@ summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
-totalPoints: 352
+totalQuantity: 352
 ---
 
 - [x] Getting Things Done (1-118) ⏳ 2024-08-19
@@ -24,7 +24,7 @@ totalPoints: 352
             startDate: new Date("2024-08-19"),
             endDate: new Date("2024-08-23"),
             actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
-            totalPoints: 352,
+            totalQuantity: 352,
             tasks: [
                 {
                     description: "Getting Things Done",
