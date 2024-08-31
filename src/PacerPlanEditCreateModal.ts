@@ -6,25 +6,26 @@ export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
 	onSubmit: (result: PacerPlan) => void;
 
+	totalQuantitySetting: Setting;
+
 	constructor(app: App, onSubmit: (result: PacerPlan) => void) {
 		super(app);
 		this.onSubmit = onSubmit;
 	}
 
+	fileExists(fileName: string): boolean {
+		const resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
+		if (resultFile) {
+			return true;
+		}
+		return false;
+	}
+
+
 	onOpen() {
 		this.result = new PacerPlan();
 
-		const defaultFileName = "Untitled Plan";
-		this.result.title = defaultFileName;
-
-		let resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
-		let fileNumber = 2;
-
-		while (resultFile) {
-			this.result.title = defaultFileName + " " + fileNumber;
-			resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
-			fileNumber++;
-		}
+		this.setDefaultTitleName();
 
 		this.result.startDate = new Date();
 		this.result.actionDays = Days.Everyday;
@@ -34,7 +35,7 @@ export class PacerPlanEditCreateModal extends Modal {
 
 		new Setting(contentEl)
 			.setName("Title")
-			.setDesc("The name of the plan.")
+			.setDesc("The name of the plan. e.g. 'Read Atomic Habits', 'Chapter 3 Math Problems', 'Complete 100 Paragraph Essay'")
 			.addText((text) =>
 				text.onChange((value) => (this.result.title = value))
 					.setPlaceholder(this.result.title)
@@ -42,9 +43,33 @@ export class PacerPlanEditCreateModal extends Modal {
 
 		new Setting(contentEl)
 			.setName("Summary")
-			.setDesc("A brief description of the plan.")
+			.setDesc("(Optional) A brief description of the plan. e.g. Why are you doing it? What are you trying to accomplish? Why is this important to you?")
 			.addTextArea((text) =>
 				text.onChange((value) => (this.result.summary = value))
+			);
+
+		new Setting(contentEl)
+			.setName("Quantity Type")
+			.setDesc("The units for the quantity of work to be done. e.g. pages, paragraphs, problems, etc.")
+			.addText((text) =>
+				text.onChange((value) => {
+					this.totalQuantitySetting.setName(`Total ${value}`);
+					this.totalQuantitySetting.setDesc(
+						`The total ${value.toLowerCase()} to be completed.`
+					)
+					this.result.quantityType = value
+				})
+			);
+
+		this.totalQuantitySetting = new Setting(contentEl)
+			.setName("Total Quantity")
+			.setDesc(
+				"The total quantity of work to be completed."
+			)
+			.addText((text) =>
+				text.onChange((value) => {
+					this.result.totalQuantity = Number.parseInt(value);
+				})
 			);
 
 		new Setting(contentEl)
@@ -78,20 +103,9 @@ export class PacerPlanEditCreateModal extends Modal {
 					(value) =>
 						(this.result.actionDays = shortStringToDays(value))
 				)
-				.setPlaceholder("UMTWRFS")
+					.setPlaceholder("UMTWRFS")
 			);
 
-		new Setting(contentEl)
-			.setName("Total Quantity")
-			.setDesc(
-				"The total quantity to be completed. e.g. pages to read, paragraphs to write, or problems to solve, etc."
-			)
-			.addText((text) =>
-				text.onChange(
-					(value) =>
-						(this.result.totalQuantity = Number.parseInt(value))
-				)
-			);
 
 		new Setting(contentEl).addButton((cb) =>
 			cb.setButtonText("Create").onClick(() => {
@@ -105,6 +119,17 @@ export class PacerPlanEditCreateModal extends Modal {
 				this.close();
 			})
 		);
+	}
+
+	private setDefaultTitleName() {
+		const defaultFileName = "Untitled Plan";
+		this.result.title = defaultFileName;
+		let fileNumber = 2;
+
+		while (this.fileExists(this.result.title)) {
+			this.result.title = defaultFileName + " " + fileNumber;
+			fileNumber++;
+		}
 	}
 
 	onClose() {

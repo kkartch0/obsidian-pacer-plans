@@ -11,6 +11,7 @@ export class PacerPlan {
     actionDays: Days;
     totalQuantity: number;
     tasks: Task[];
+	quantityType: string;
 
 
     constructor(
