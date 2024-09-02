@@ -49,6 +49,14 @@ export class PacerPlan {
         return this.endNumber - this.startNumber + 1;
     }
 
+    get availableActionDates(): Date[] {
+        return calculateAvailableActionDates(this.startDate, this.endDate, this.actionDays);
+    }
+
+    get quantityPerDay(): number {
+        return this.totalQuantity / this.availableActionDates.length;
+    }
+
     /**
      * Generates tasks for the PacerPlan according to the action days, start date, end date, and total points.
      */
@@ -58,14 +66,13 @@ export class PacerPlan {
         if (this.totalQuantity <= 0) {
             return tasks;
         }
-
-        const availableActionDates = calculateAvailableActionDates(this.startDate, this.endDate, this.actionDays);
-        const wholePointsPerDay = Math.floor(this.totalQuantity / availableActionDates.length);
+        const wholePointsPerDay = Math.floor(this.quantityPerDay);
+        const availableActionDates = this.availableActionDates;
 
         let remainingExtraPoints = this.totalQuantity % availableActionDates.length;
         let currentPoint = this.startNumber;
 
-        availableActionDates.forEach((currentDate, index) => {
+        this.availableActionDates.forEach((currentDate) => {
             const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: this.endNumber });
 
             tasks.push(new Task({

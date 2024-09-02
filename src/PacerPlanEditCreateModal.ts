@@ -1,6 +1,7 @@
 import { Modal, App, Setting } from "obsidian";
 import { PacerPlan } from "./PacerPlan";
 import { Days, shortStringToDays } from "./Days";
+import { data } from "cheerio/lib/api/attributes";
 
 export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
@@ -8,7 +9,9 @@ export class PacerPlanEditCreateModal extends Modal {
 
 	endingPointSetting: Setting;
 	startingPointSetting: Setting;
-	totalQuantitySetting: Setting;
+	planInformationTable: HTMLTableElement;
+	cancelButton: Setting;
+	createButton: Setting;
 
 	constructor(app: App, onSubmit: (result: PacerPlan) => void) {
 		super(app);
@@ -41,7 +44,10 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setName("Title")
 			.setDesc("The name of the plan. e.g. 'Read Atomic Habits', 'Chapter 3 Math Problems', 'Complete 100 Paragraph Essay'")
 			.addText((text) =>
-				text.onChange((value) => (this.result.title = value))
+				text.onChange((value) => {
+					this.result.title = value;
+					this.displayPlanInformation(contentEl);
+				})
 					.setPlaceholder(this.result.title)
 			);
 
@@ -49,7 +55,10 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setName("Summary")
 			.setDesc("(Optional) A brief description of the plan. e.g. Why are you doing it? What are you trying to accomplish? Why is this important to you?")
 			.addTextArea((text) =>
-				text.onChange((value) => (this.result.summary = value))
+				text.onChange((value) => {
+					this.result.summary = value;
+					this.displayPlanInformation(contentEl);
+				})
 			);
 
 		new Setting(contentEl)
@@ -57,7 +66,8 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setDesc("The units for the quantity of work to be done. e.g. pages, paragraphs, problems, etc.")
 			.addText((text) =>
 				text.onChange((value) => {
-					this.result.quantityType = value
+					this.result.quantityType = value;
+					this.displayPlanInformation(contentEl);
 				})
 			);
 
@@ -69,7 +79,7 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text.onChange((value) => {
 					this.result.startNumber = Number.parseInt(value);
-					this.setTotalQuantity();
+					this.displayPlanInformation(contentEl);
 				}).setPlaceholder(this.result.startNumber.toString())
 			);
 
@@ -81,16 +91,10 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text.onChange((value) => {
 					this.result.endNumber = Number.parseInt(value);
-					this.setTotalQuantity();
+					this.displayPlanInformation(contentEl);
 				}).setPlaceholder(this.result.endNumber.toString())
 			);
 
-		this.totalQuantitySetting = new Setting(contentEl)
-			.setName("Total Quantity")
-			.setDesc(
-				"The total quantity of work to be completed."
-			)
-		this.setTotalQuantity()
 
 		new Setting(contentEl)
 			.setName("Start Date")
@@ -99,6 +103,7 @@ export class PacerPlanEditCreateModal extends Modal {
 				text
 					.onChange((value) => {
 						this.result.startDate = new Date(value);
+						this.displayPlanInformation(contentEl);
 					})
 					.setPlaceholder("YYYY-MM-DD")
 					.setValue(new Date().toISOString().split("T")[0])
@@ -110,7 +115,10 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text
 					.onChange(
-						(value) => (this.result.endDate = new Date(value))
+						(value) => {
+							this.result.endDate = new Date(value);
+							this.displayPlanInformation(contentEl);
+						}
 					)
 					.setPlaceholder("YYYY-MM-DD")
 			);
@@ -120,25 +128,59 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setDesc("The days of the week the plan is active. U = Sunday, M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday, S = Saturday.")
 			.addText((text) =>
 				text.onChange(
-					(value) =>
-						(this.result.actionDays = shortStringToDays(value))
+					(value) => {
+						if (value.length === 0) {
+							value = "UMTWRFS";
+						}
+						this.result.actionDays = shortStringToDays(value);
+						this.displayPlanInformation(contentEl);
+					}
 				)
 					.setPlaceholder("UMTWRFS")
 			);
 
+		this.displayPlanInformation(contentEl);
+	}
 
-		new Setting(contentEl).addButton((cb) =>
-			cb.setButtonText("Create").onClick(() => {
-				this.close();
-				this.onSubmit(this.result);
-			})
+	private AddButtons(contentEl: HTMLElement) {
+		this.createButton = new Setting(contentEl).addButton((cb) => cb.setButtonText("Create").onClick(() => {
+			this.close();
+			this.onSubmit(this.result);
+		})
 		);
 
-		new Setting(contentEl).addButton((cb) =>
-			cb.setButtonText("Cancel").onClick(() => {
-				this.close();
-			})
+		this.cancelButton = new Setting(contentEl).addButton((cb) => cb.setButtonText("Cancel").onClick(() => {
+			this.close();
+		})
 		);
+	}
+
+	displayPlanInformation(contentEl: HTMLElement) {
+		if (this.planInformationTable) {
+			contentEl.removeChild(this.planInformationTable);
+			contentEl.removeChild(this.createButton.settingEl);
+			contentEl.removeChild(this.cancelButton.settingEl);
+		}
+		this.planInformationTable = contentEl.createEl("table");
+		this.planInformationTable.style.width = "100%";
+		this.planInformationTable.addClass("callout");
+
+		// Display the total quantity of work to be done
+		const row1 = this.planInformationTable.createEl("tr");
+		row1.createEl("td", { text: "Total Quantity" });
+		row1.createEl("td", { text: this.result.totalQuantity.toString() });
+
+		// Display the number of action days the plan is active
+		const row2 = this.planInformationTable.createEl("tr");
+		row2.createEl("td", { text: "Number of Action Days" });
+		row2.createEl("td", { text: this.result.availableActionDates.length.toString() });
+
+		// Display the quantity of work to be done per day
+		const row3 = this.planInformationTable.createEl("tr");
+		row3.createEl("td", { text: "Avg. Quantity per Action Day" });
+		row3.createEl("td", { text: this.result.quantityPerDay.toFixed(2) });
+
+		this.AddButtons(contentEl);
 	}
 
 	private setDefaultTitleName() {
@@ -150,12 +192,6 @@ export class PacerPlanEditCreateModal extends Modal {
 			this.result.title = defaultFileName + " " + fileNumber;
 			fileNumber++;
 		}
-	}
-
-	setTotalQuantity() {
-		this.totalQuantitySetting.clear().addText((text) =>
-			text.setValue(this.result.totalQuantity.toString()))
-			.setDisabled(true);
 	}
 
 	onClose() {
