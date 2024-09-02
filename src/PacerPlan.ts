@@ -1,6 +1,6 @@
 import { calculateAvailableActionDates } from "./dateHelper";
 import { Days, daysToShortString } from "./Days";
-import { GetEndPoint } from "./PacerPlan.helper";
+import { getEndPoint } from "./PacerPlan.helper";
 import { Task } from "./Task";
 
 export class PacerPlan {
@@ -73,7 +73,7 @@ export class PacerPlan {
         let currentPoint = this.startNumber;
 
         this.availableActionDates.forEach((currentDate) => {
-            const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: this.endNumber });
+            const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: this.endNumber });
 
             tasks.push(new Task({
                 description: this.title,
