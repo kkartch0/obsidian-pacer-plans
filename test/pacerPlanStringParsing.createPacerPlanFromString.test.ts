@@ -10,12 +10,12 @@ summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
-totalQuantity: 352
+startNumber: 22
+endNumber: 352
 ---
-
-- [x] Getting Things Done (1-118) ⏳ 2024-08-19
-- [ ] Getting Things Done (119-235) ⏳ 2024-08-20
-- [ ] Getting Things Done (236-352) ⏳ 2024-08-22
+- [x] Getting Things Done (22-132) ⏳ 2024-08-19
+- [ ] Getting Things Done (133-242) ⏳ 2024-08-20
+- [ ] Getting Things Done (243-352) ⏳ 2024-08-22
 `;
 
         const expectedPlan = new PacerPlan({
@@ -24,25 +24,26 @@ totalQuantity: 352
             startDate: new Date("2024-08-19"),
             endDate: new Date("2024-08-23"),
             actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
-            totalQuantity: 352,
+            startNumber: 22,
+            endNumber: 352,
             tasks: [
                 {
                     description: "Getting Things Done",
-                    startPoint: 1,
-                    endPoint: 118,
+                    startPoint: 22,
+                    endPoint: 132,
                     completed: true,
                     scheduledDate: new Date("2024-08-19")
                 },
                 {
                     description: "Getting Things Done",
-                    startPoint: 119,
-                    endPoint: 235,
+                    startPoint: 133,
+                    endPoint: 242,
                     completed: false,
                     scheduledDate: new Date("2024-08-20")
                 },
                 {
                     description: "Getting Things Done",
-                    startPoint: 236,
+                    startPoint: 243,
                     endPoint: 352,
                     completed: false,
                     scheduledDate: new Date("2024-08-22")

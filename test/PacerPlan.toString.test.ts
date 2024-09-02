@@ -11,25 +11,26 @@ describe("PacerPlan", () => {
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
-            plan.totalQuantity = 352;
+            plan.startNumber = 22;
+            plan.endNumber = 352;
             plan.tasks = [ 
                 new Task({
                     description: "Getting Things Done",
-                    startPoint: 1,
-                    endPoint: 118,
+                    startPoint: 22,
+                    endPoint: 132,
                     scheduledDate: new Date(2024, 7, 19),
                     completed: true
                 }),
                 new Task({
                     description: "Getting Things Done",
-                    startPoint: 119,
-                    endPoint: 235,
+                    startPoint: 133,
+                    endPoint: 242,
                     scheduledDate: new Date(2024, 7, 20),
                     completed: false
                 }),
                 new Task({
                     description: "Getting Things Done",
-                    startPoint: 236,
+                    startPoint: 243,
                     endPoint: 352,
                     scheduledDate: new Date(2024, 7, 22),
                     completed: false
@@ -44,12 +45,12 @@ summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
-totalQuantity: 352
+startNumber: 22
+endNumber: 352
 ---
-
-- [x] Getting Things Done (1-118) ⏳ 2024-08-19
-- [ ] Getting Things Done (119-235) ⏳ 2024-08-20
-- [ ] Getting Things Done (236-352) ⏳ 2024-08-22
+- [x] Getting Things Done (22-132) ⏳ 2024-08-19
+- [ ] Getting Things Done (133-242) ⏳ 2024-08-20
+- [ ] Getting Things Done (243-352) ⏳ 2024-08-22
 `);
         });
     });

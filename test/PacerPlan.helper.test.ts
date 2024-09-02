@@ -6,7 +6,7 @@ describe("GetEndPoint", () => {
             currentPoint: 100, 
             wholePointsPerDay: 50, 
             remainingExtraPoints: 0,
-            totalQuantity: 149
+            endNumber: 149
         });
 
         expect(result).toEqual(149);
@@ -17,7 +17,7 @@ describe("GetEndPoint", () => {
             currentPoint: 200, 
             wholePointsPerDay: 50, 
             remainingExtraPoints: 10,
-            totalQuantity: 249
+            endNumber: 249
         });
 
         expect(result).toEqual(249);
@@ -28,7 +28,7 @@ describe("GetEndPoint", () => {
             currentPoint: 300, 
             wholePointsPerDay: 100, 
             remainingExtraPoints: 50,
-            totalQuantity: 350
+            endNumber: 350
         });
 
         expect(result).toEqual(350);

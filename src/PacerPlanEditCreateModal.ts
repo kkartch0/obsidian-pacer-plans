@@ -6,6 +6,8 @@ export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
 	onSubmit: (result: PacerPlan) => void;
 
+	endingPointSetting: Setting;
+	startingPointSetting: Setting;
 	totalQuantitySetting: Setting;
 
 	constructor(app: App, onSubmit: (result: PacerPlan) => void) {
@@ -14,7 +16,7 @@ export class PacerPlanEditCreateModal extends Modal {
 	}
 
 	fileExists(fileName: string): boolean {
-		const resultFile = this.app.vault.getAbstractFileByPath(this.result.title + ".md");
+		const resultFile = this.app.vault.getAbstractFileByPath(fileName);
 		if (resultFile) {
 			return true;
 		}
@@ -29,6 +31,8 @@ export class PacerPlanEditCreateModal extends Modal {
 
 		this.result.startDate = new Date();
 		this.result.actionDays = Days.Everyday;
+		this.result.startNumber = 1;
+		this.result.endNumber = 1;
 
 		const { contentEl } = this;
 		contentEl.createEl("h1", { text: "New Pacer Plan" });
@@ -53,12 +57,32 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setDesc("The units for the quantity of work to be done. e.g. pages, paragraphs, problems, etc.")
 			.addText((text) =>
 				text.onChange((value) => {
-					this.totalQuantitySetting.setName(`Total ${value}`);
-					this.totalQuantitySetting.setDesc(
-						`The total ${value.toLowerCase()} to be completed.`
-					)
 					this.result.quantityType = value
 				})
+			);
+
+		this.startingPointSetting = new Setting(contentEl)
+			.setName("Starting Point")
+			.setDesc(
+				"The point to start at. e.g. 1, 10, 20 etc."
+			)
+			.addText((text) =>
+				text.onChange((value) => {
+					this.result.startNumber = Number.parseInt(value);
+					this.setTotalQuantity();
+				}).setPlaceholder(this.result.startNumber.toString())
+			);
+
+		this.endingPointSetting = new Setting(contentEl)
+			.setName("Ending Point")
+			.setDesc(
+				"The point to end at. e.g. 33, 200, 299, etc."
+			)
+			.addText((text) =>
+				text.onChange((value) => {
+					this.result.endNumber = Number.parseInt(value);
+					this.setTotalQuantity();
+				}).setPlaceholder(this.result.endNumber.toString())
 			);
 
 		this.totalQuantitySetting = new Setting(contentEl)
@@ -66,11 +90,7 @@ export class PacerPlanEditCreateModal extends Modal {
 			.setDesc(
 				"The total quantity of work to be completed."
 			)
-			.addText((text) =>
-				text.onChange((value) => {
-					this.result.totalQuantity = Number.parseInt(value);
-				})
-			);
+		this.setTotalQuantity()
 
 		new Setting(contentEl)
 			.setName("Start Date")
@@ -126,10 +146,16 @@ export class PacerPlanEditCreateModal extends Modal {
 		this.result.title = defaultFileName;
 		let fileNumber = 2;
 
-		while (this.fileExists(this.result.title)) {
+		while (this.fileExists(this.result.title + ".md")) {
 			this.result.title = defaultFileName + " " + fileNumber;
 			fileNumber++;
 		}
+	}
+
+	setTotalQuantity() {
+		this.totalQuantitySetting.clear().addText((text) =>
+			text.setValue(this.result.totalQuantity.toString()))
+			.setDisabled(true);
 	}
 
 	onClose() {

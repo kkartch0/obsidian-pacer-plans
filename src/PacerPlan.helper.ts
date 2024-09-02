@@ -3,16 +3,16 @@ export function GetEndPoint(
         currentPoint,
         wholePointsPerDay,
         remainingExtraPoints,
-        totalQuantity
+        endNumber
     }: {
         currentPoint: number;
         wholePointsPerDay: number;
         remainingExtraPoints: number;
-        totalQuantity: number;
+        endNumber: number;
     }
 ): number {
     let endPoint = currentPoint + wholePointsPerDay - 1;
     endPoint += remainingExtraPoints > 0 ? 1 : 0;
-    endPoint = Math.min(endPoint, totalQuantity);
+    endPoint = Math.min(endPoint, endNumber);
     return endPoint;
 }

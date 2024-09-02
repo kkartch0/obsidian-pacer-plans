@@ -9,10 +9,11 @@ export class PacerPlan {
     startDate: Date;
     endDate: Date;
     actionDays: Days;
-    totalQuantity: number;
-    tasks: Task[];
-	quantityType: string;
+    startNumber: number;
+    endNumber: number;
 
+    tasks: Task[];
+    quantityType: string;
 
     constructor(
         {
@@ -21,7 +22,8 @@ export class PacerPlan {
             startDate,
             endDate,
             actionDays,
-            totalQuantity,
+            startNumber,
+            endNumber,
             tasks
         }: {
             title?: string,
@@ -29,6 +31,8 @@ export class PacerPlan {
             startDate?: Date,
             endDate?: Date,
             actionDays?: Days,
+            startNumber?: number,
+            endNumber?: number,
             totalQuantity?: number, tasks?: Task[]
         } = {}) {
         this.title = title || "";
@@ -36,8 +40,13 @@ export class PacerPlan {
         this.startDate = startDate || new Date();
         this.endDate = endDate || new Date();
         this.actionDays = actionDays || Days.None;
-        this.totalQuantity = totalQuantity || 0;
+        this.startNumber = startNumber || 0;
+        this.endNumber = endNumber || 0;
         this.tasks = tasks || [];
+    }
+
+    get totalQuantity(): number {
+        return this.endNumber - this.startNumber + 1;
     }
 
     /**
@@ -54,10 +63,10 @@ export class PacerPlan {
         const wholePointsPerDay = Math.floor(this.totalQuantity / availableActionDates.length);
 
         let remainingExtraPoints = this.totalQuantity % availableActionDates.length;
-        let currentPoint = 1;
+        let currentPoint = this.startNumber;
 
         availableActionDates.forEach((currentDate, index) => {
-            const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, totalQuantity: this.totalQuantity });
+            const endPoint = GetEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: this.endNumber });
 
             tasks.push(new Task({
                 description: this.title,
@@ -86,9 +95,9 @@ summary: ${this.summary}
 startDate: ${this.startDate.toISOString().slice(0, 10)}
 endDate: ${this.endDate.toISOString().slice(0, 10)}
 actionDays: ${daysToShortString(this.actionDays)}
-totalQuantity: ${this.totalQuantity}
+startNumber: ${this.startNumber}
+endNumber: ${this.endNumber}
 ---
-
 ${tasksString}
 `;
     }
