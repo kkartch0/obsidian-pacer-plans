@@ -1,7 +1,7 @@
 import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 import { PacerPlanSettingsTab } from './PacerPlanSettingsTab';
 import { PacerPlanEditCreateModal } from './PacerPlanEditCreateModal';
-import { executionAsyncId } from 'async_hooks';
+import { generateTasksForPacerPlan } from './PacerPlan.helper';
 
 // Remember to rename these classes and interfaces!
 
@@ -25,7 +25,9 @@ export default class PacerPlansPlugin extends Plugin {
 			name: 'Create new Pacer Plan',
 			callback: () => {
 				new PacerPlanEditCreateModal(this.app, async (result) => {
-					result.generateTasks();
+					result.tasks = generateTasksForPacerPlan(result, result.startNumber, { 
+						today: () => new Date() 
+					});
 
 					let resultString = result.toString();
 					console.log("Pacer Plan:")
