@@ -36,8 +36,10 @@ export class Task {
      * @returns A string representation of the Task object.
      */
     toString(): string {
-        let prefix = this.completed ? "- [x]" : "- [ ]";
+        const prefix = this.completed ? "- [x]" : "- [ ]";
+        const rangeString = (this.startPoint === this.endPoint) ? 
+            this.startPoint.toString() : `${this.startPoint}-${this.endPoint}`; 
 
-        return `${prefix} ${this.description} (${this.startPoint}-${this.endPoint}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;
+        return `${prefix} ${this.description} (${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;
     }
 }
