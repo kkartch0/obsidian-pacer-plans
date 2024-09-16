@@ -35,9 +35,11 @@ import { Task } from "./Task";
  * console.log(plan.tasks); // Output: [Task, Task, Task]
  */
 export function createPacerPlanFromString(
+    planTitle: string,
     planString: string
 ): PacerPlan {
     let plan = new PacerPlan();
+    plan.title = planTitle;
 
     const lines = planString.split("\n");
     const metadataLines = lines.slice(1, lines.indexOf("---", 1));
@@ -108,9 +110,6 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
     const [key, value] = line.split(":").map(s => s.trim());
 
     switch (key) {
-        case "title":
-            plan.title = value;
-            break;
         case "summary":
             plan.summary = value;
             break;

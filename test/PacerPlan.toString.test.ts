@@ -5,6 +5,7 @@ import { PacerPlan } from "../src/PacerPlan";
 describe("PacerPlan", () => {
     describe("toString", () => {
         it("should return the string representation of the PacerPlan", () => {
+            // Arrange
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
             plan.summary = "Read Getting Things Done by David Allen";
@@ -37,10 +38,11 @@ describe("PacerPlan", () => {
                 })
             ];
 
+            // Act
             const result = plan.toString();
 
+            // Assert
             expect(result).toEqual(`---
-title: Getting Things Done
 summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23

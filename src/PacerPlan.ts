@@ -97,7 +97,6 @@ export class PacerPlan {
         let tasksString = this.tasks.map(task => task.toString()).join("\n");
 
         return `---
-title: ${this.title}
 summary: ${this.summary}
 startDate: ${this.startDate.toISOString().slice(0, 10)}
 endDate: ${this.endDate.toISOString().slice(0, 10)}
