@@ -4,8 +4,8 @@ import { PacerPlan } from "../src/PacerPlan";
 
 describe("createPacerPlanFromString", () => {
     it("should create a PacerPlan object from a string representation", () => {
-        const planString = `---
-title: Getting Things Done
+        const planTitle = "Getting Things Done";
+        const planContent = `---
 summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
@@ -18,6 +18,11 @@ endNumber: 352
 - [ ] Getting Things Done (243-352) ⏳ 2024-08-22
 `;
 
+
+        // Act
+        const result = createPacerPlanFromString(planTitle, planContent);
+
+        // Assert
         const expectedPlan = new PacerPlan({
             title: "Getting Things Done",
             summary: "Read Getting Things Done by David Allen",
@@ -51,9 +56,6 @@ endNumber: 352
             ]
         }
         );
-
-        const result = createPacerPlanFromString(planString);
-
         expect(result).toEqual(expectedPlan);
     });
 });
