@@ -55,9 +55,9 @@ quantityType: Pages
 startNumber: 22
 endNumber: 352
 ---
-- [x] Getting Things Done (22-132) ⏳ 2024-08-19
-- [ ] Getting Things Done (133-242) ⏳ 2024-08-20
-- [ ] Getting Things Done (243-352) ⏳ 2024-08-22
+- [x] Getting Things Done (pages 22-132) ⏳ 2024-08-19
+- [ ] Getting Things Done (pages 133-242) ⏳ 2024-08-20
+- [ ] Getting Things Done (pages 243-352) ⏳ 2024-08-22
 `);
         });
     });
