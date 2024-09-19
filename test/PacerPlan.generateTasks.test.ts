@@ -9,6 +9,7 @@ describe("PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
             plan.summary = "Read Getting Things Done by David Allen";
+            plan.quantityType = "Pages";
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;

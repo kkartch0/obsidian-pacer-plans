@@ -24,7 +24,8 @@ export class PacerPlan {
             actionDays,
             startNumber,
             endNumber,
-            tasks
+            tasks,
+            quantityType
         }: {
             title?: string,
             summary?: string,
@@ -33,7 +34,8 @@ export class PacerPlan {
             actionDays?: Days,
             startNumber?: number,
             endNumber?: number,
-            totalQuantity?: number, tasks?: Task[]
+            tasks?: Task[],
+            quantityType?: string
         } = {}) {
         this.title = title || "";
         this.summary = summary || "";
@@ -42,6 +44,7 @@ export class PacerPlan {
         this.actionDays = actionDays || Days.None;
         this.startNumber = startNumber || 0;
         this.endNumber = endNumber || 0;
+        this.quantityType = quantityType || "";
         this.tasks = tasks || [];
     }
 
@@ -101,6 +104,7 @@ summary: ${this.summary}
 startDate: ${this.startDate.toISOString().slice(0, 10)}
 endDate: ${this.endDate.toISOString().slice(0, 10)}
 actionDays: ${daysToShortString(this.actionDays)}
+quantityType: ${this.quantityType}
 startNumber: ${this.startNumber}
 endNumber: ${this.endNumber}
 ---

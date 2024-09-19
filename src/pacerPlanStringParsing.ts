@@ -122,6 +122,9 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
         case "actionDays":
             plan.actionDays = shortStringToDays(value);
             break;
+        case "quantityType":
+            plan.quantityType = value;
+            break;
         case "startNumber":
             plan.startNumber = parseInt(value);
             break;

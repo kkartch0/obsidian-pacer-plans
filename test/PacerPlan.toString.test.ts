@@ -9,6 +9,7 @@ describe("PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
             plan.summary = "Read Getting Things Done by David Allen";
+            plan.quantityType = "Pages";
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
@@ -47,6 +48,7 @@ summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
+quantityType: Pages
 startNumber: 22
 endNumber: 352
 ---
