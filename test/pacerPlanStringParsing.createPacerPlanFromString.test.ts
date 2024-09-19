@@ -10,6 +10,7 @@ summary: Read Getting Things Done by David Allen
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
+quantityType: Pages
 startNumber: 22
 endNumber: 352
 ---
@@ -29,11 +30,13 @@ endNumber: 352
             startDate: new Date("2024-08-19"),
             endDate: new Date("2024-08-23"),
             actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
+            quantityType: "Pages",
             startNumber: 22,
             endNumber: 352,
             tasks: [
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 22,
                     endPoint: 132,
                     completed: true,
@@ -41,6 +44,7 @@ endNumber: 352
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 133,
                     endPoint: 242,
                     completed: false,
@@ -48,6 +52,7 @@ endNumber: 352
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 243,
                     endPoint: 352,
                     completed: false,

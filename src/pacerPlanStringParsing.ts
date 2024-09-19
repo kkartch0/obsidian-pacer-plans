@@ -48,7 +48,7 @@ export function createPacerPlanFromString(
 
     metadataLines.forEach(applyMetadataLineToPacerPlan.bind(null, plan));
 
-    plan.tasks = taskStrings.map(createTaskFromTaskString);
+    plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType));
 
     return plan;
 }
@@ -59,7 +59,7 @@ export function createPacerPlanFromString(
  * @param taskString - The task string to parse.
  * @returns A Task object created from the task string.
  */
-export function createTaskFromTaskString(taskString: string): Task {
+export function createTaskFromTaskString(taskString: string, quantityType: string): Task {
 
     // regex to match the task string
     // - [x] Getting Things Done (1-118) ⏳ 2024-08-19
@@ -92,6 +92,7 @@ export function createTaskFromTaskString(taskString: string): Task {
 
     return new Task({
         description,
+        quantityType,
         startPoint,
         endPoint,
         completed,
@@ -121,6 +122,9 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
             break;
         case "actionDays":
             plan.actionDays = shortStringToDays(value);
+            break;
+        case "quantityType":
+            plan.quantityType = value;
             break;
         case "startNumber":
             plan.startNumber = parseInt(value);

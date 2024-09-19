@@ -9,6 +9,7 @@ describe("PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
             plan.summary = "Read Getting Things Done by David Allen";
+            plan.quantityType = "Pages";
             plan.startDate = new Date(2024, 7, 19);
             plan.endDate = new Date(2024, 7, 23);
             plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
@@ -20,6 +21,7 @@ describe("PacerPlan", () => {
             expect(result).toEqual([
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 1,
                     endPoint: 118,
                     scheduledDate: new Date(2024, 7, 19),
@@ -27,6 +29,7 @@ describe("PacerPlan", () => {
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 119,
                     endPoint: 235,
                     scheduledDate: new Date(2024, 7, 20),
@@ -34,6 +37,7 @@ describe("PacerPlan", () => {
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 236,
                     endPoint: 352,
                     scheduledDate: new Date(2024, 7, 22),
@@ -46,6 +50,7 @@ describe("PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Math Problems";
             plan.summary = "Complete math problems from the textbook";
+            plan.quantityType = "Problems";
             plan.startDate = new Date(2024, 8, 2);
             plan.endDate = new Date(2024, 8, 6);
             plan.actionDays = Days.Everyday;
@@ -57,6 +62,7 @@ describe("PacerPlan", () => {
             expect(result).toStrictEqual([
                 new Task({
                     description: "Math Problems",
+                    quantityType: "Problems",
                     startPoint: 1,
                     endPoint: 5,
                     scheduledDate: new Date(2024, 8, 2),
@@ -64,6 +70,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Math Problems",
+                    quantityType: "Problems",
                     startPoint: 6,
                     endPoint: 10,
                     scheduledDate: new Date(2024, 8, 3),
@@ -71,6 +78,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Math Problems",
+                    quantityType: "Problems",
                     startPoint: 11,
                     endPoint: 15,
                     scheduledDate: new Date(2024, 8, 4),
@@ -78,6 +86,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Math Problems",
+                    quantityType: "Problems",
                     startPoint: 16,
                     endPoint: 20,
                     scheduledDate: new Date(2024, 8, 5),
@@ -85,6 +94,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Math Problems",
+                    quantityType: "Problems",
                     startPoint: 21,
                     endPoint: 24,
                     scheduledDate: new Date(2024, 8, 6),
