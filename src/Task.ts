@@ -1,5 +1,6 @@
 export class Task {
     description: string;
+    quantityType: string;
     startPoint: number;
     endPoint: number;
     scheduledDate: Date;
@@ -7,18 +8,21 @@ export class Task {
 
     constructor({
         description,
+        quantityType,
         startPoint,
         endPoint,
         scheduledDate,
         completed
     }: {
         description: string;
+        quantityType: string;
         startPoint: number;
         endPoint: number;
         scheduledDate: Date;
         completed: boolean;
     }) {
         this.description = description;
+        this.quantityType = quantityType;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.scheduledDate = scheduledDate;

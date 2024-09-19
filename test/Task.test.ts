@@ -6,6 +6,7 @@ describe("toString", () => {
             it("returns the correct string representation", () => {
                 const task = new Task({
                     description: "Completed Task",
+                    quantityType: "Pages",
                     startPoint: 100,
                     endPoint: 100,
                     scheduledDate: new Date("2022-01-01"),
@@ -22,6 +23,7 @@ describe("toString", () => {
             it("returns the correct string representation", () => {
                 const task = new Task({
                     description: "Sample Task",
+                    quantityType: "Pages",
                     startPoint: 100,
                     endPoint: 100,
                     scheduledDate: new Date("2022-01-01"),
@@ -40,6 +42,7 @@ describe("toString", () => {
             it("returns the correct string representation", () => {
                 const task = new Task({
                     description: "Sample Task",
+                    quantityType: "Pages",
                     startPoint: 50,
                     endPoint: 100,
                     scheduledDate: new Date("2022-02-01"),
@@ -56,6 +59,7 @@ describe("toString", () => {
             it("returns the correct string representation", () => {
                 const task = new Task({
                     description: "Completed Task",
+                    quantityType: "Pages",
                     startPoint: 50,
                     endPoint: 100,
                     scheduledDate: new Date("2022-02-01"),

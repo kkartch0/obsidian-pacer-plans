@@ -6,13 +6,14 @@ describe("createTaskFromTaskString", () => {
         const taskString = "- [x] Getting Things Done (1-118) ⏳ 2024-08-19";
         const expectedTask = new Task({
             description: "Getting Things Done",
+            quantityType: "Pages",
             startPoint: 1,
             endPoint: 118,
             completed: true,
             scheduledDate: new Date("2024-08-19")
         });
 
-        const result = createTaskFromTaskString(taskString);
+        const result = createTaskFromTaskString(taskString, "Pages");
 
         expect(result).toEqual(expectedTask);
     });

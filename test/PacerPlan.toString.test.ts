@@ -18,6 +18,7 @@ describe("PacerPlan", () => {
             plan.tasks = [ 
                 new Task({
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 22,
                     endPoint: 132,
                     scheduledDate: new Date(2024, 7, 19),
@@ -25,6 +26,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 133,
                     endPoint: 242,
                     scheduledDate: new Date(2024, 7, 20),
@@ -32,6 +34,7 @@ describe("PacerPlan", () => {
                 }),
                 new Task({
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 243,
                     endPoint: 352,
                     scheduledDate: new Date(2024, 7, 22),

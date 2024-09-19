@@ -80,6 +80,7 @@ export class PacerPlan {
 
             tasks.push(new Task({
                 description: this.title,
+                quantityType: this.quantityType,
                 startPoint: currentPoint,
                 endPoint: endPoint,
                 scheduledDate: currentDate,

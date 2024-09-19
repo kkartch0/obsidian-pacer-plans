@@ -36,6 +36,7 @@ endNumber: 352
             tasks: [
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 22,
                     endPoint: 132,
                     completed: true,
@@ -43,6 +44,7 @@ endNumber: 352
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 133,
                     endPoint: 242,
                     completed: false,
@@ -50,6 +52,7 @@ endNumber: 352
                 },
                 {
                     description: "Getting Things Done",
+                    quantityType: "Pages",
                     startPoint: 243,
                     endPoint: 352,
                     completed: false,
