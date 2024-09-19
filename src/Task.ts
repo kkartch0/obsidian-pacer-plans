@@ -1,3 +1,5 @@
+import pluralize from 'pluralize';
+
 export class Task {
     description: string;
     quantityType: string;
@@ -44,6 +46,9 @@ export class Task {
         const rangeString = (this.startPoint === this.endPoint) ? 
             this.startPoint.toString() : `${this.startPoint}-${this.endPoint}`; 
 
-        return `${prefix} ${this.description} (${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;
+        const totalQuantity = this.endPoint - this.startPoint + 1;
+        const label = pluralize(this.quantityType, totalQuantity, false).toLowerCase();
+
+        return `${prefix} ${this.description} (${label} ${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;
     }
 }
