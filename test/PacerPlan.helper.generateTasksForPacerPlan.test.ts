@@ -6,15 +6,16 @@ import { Task } from "../src/Task";
 describe("PacerPlan", () => {
     describe("generateTasksForPacerPlan", () => {
         it("scenario 1: should generate tasks for the PacerPlan", () => {
-            const plan = new PacerPlan();
-            plan.title = "Getting Things Done";
-            plan.summary = "Read Getting Things Done by David Allen";
-            plan.quantityType = "Pages";
-            plan.startDate = new Date(2024, 7, 19);
-            plan.endDate = new Date(2024, 7, 23);
-            plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
-            plan.startNumber = 1;
-            plan.endNumber = 352;
+            const plan = new PacerPlan({
+                title: "Getting Things Done",
+                summary: "Read Getting Things Done by David Allen",
+                quantityType: "Pages",
+                startDate: new Date(2024, 7, 19),
+                endDate: new Date(2024, 7, 23),
+                actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
+                startNumber: 1,
+                endNumber: 352
+            });
 
             const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
 
@@ -47,15 +48,16 @@ describe("PacerPlan", () => {
         });
 
         it("scenario 2: should generate tasks for the PacerPlan", () => {
-            const plan = new PacerPlan();
-            plan.title = "Math Problems";
-            plan.summary = "Complete math problems from the textbook";
-            plan.quantityType = "Problems";
-            plan.startDate = new Date(2024, 8, 2);
-            plan.endDate = new Date(2024, 8, 6);
-            plan.actionDays = Days.Everyday;
-            plan.startNumber = 1;
-            plan.endNumber = 24;
+            const plan = new PacerPlan({
+                title: "Math Problems",
+                summary: "Complete math problems from the textbook",
+                quantityType: "Problems",
+                startDate: new Date(2024, 8, 2),
+                endDate: new Date(2024, 8, 6),
+                actionDays: Days.Everyday,
+                startNumber: 1,
+                endNumber: 24
+            });
 
             const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 8, 2) });
 
@@ -104,14 +106,15 @@ describe("PacerPlan", () => {
         });
 
         it("should return an empty array if there are no available action days", () => {
-            const plan = new PacerPlan();
-            plan.title = "Getting Things Done";
-            plan.summary = "Read Getting Things Done by David Allen";
-            plan.startDate = new Date(2024, 7, 19);
-            plan.endDate = new Date(2024, 7, 23);
-            plan.actionDays = Days.Saturday | Days.Sunday;
-            plan.startNumber = 1;
-            plan.endNumber = 352;
+            const plan = new PacerPlan({
+                title: "Getting Things Done",
+                summary: "Read Getting Things Done by David Allen",
+                startDate: new Date(2024, 7, 19),
+                endDate: new Date(2024, 7, 23),
+                actionDays: Days.Saturday | Days.Sunday,
+                startNumber: 1,
+                endNumber: 352,
+            });
 
             const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
 
@@ -119,14 +122,15 @@ describe("PacerPlan", () => {
         });
 
         it("should return an empty array if start date is after end date", () => {
-            const plan = new PacerPlan();
-            plan.title = "Getting Things Done";
-            plan.summary = "Read Getting Things Done by David Allen";
-            plan.startDate = new Date(2022, 1, 7);
-            plan.endDate = new Date(2022, 1, 1);
-            plan.actionDays = Days.Monday | Days.Wednesday | Days.Friday;
-            plan.startNumber = 1;
-            plan.endNumber = 352;
+            const plan = new PacerPlan({
+                title: "Getting Things Done",
+                summary: "Read Getting Things Done by David Allen",
+                startDate: new Date(2022, 1, 7),
+                endDate: new Date(2022, 1, 1),
+                actionDays: Days.Monday | Days.Wednesday | Days.Friday,
+                startNumber: 1,
+                endNumber: 352
+            });
 
             const result = generateTasksForPacerPlan(plan, { today: () => new Date(2022, 1, 7) });
 

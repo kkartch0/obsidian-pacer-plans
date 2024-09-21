@@ -38,8 +38,7 @@ export function createPacerPlanFromString(
     planTitle: string,
     planString: string
 ): PacerPlan {
-    let plan = new PacerPlan();
-    plan.title = planTitle;
+    let plan = new PacerPlan({ title: planTitle });
 
     const lines = planString.split("\n");
     const metadataLines = lines.slice(1, lines.indexOf("---", 1));
