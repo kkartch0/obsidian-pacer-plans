@@ -1,6 +1,10 @@
 import { PacerPlan } from "./PacerPlan";
 import { Task } from "./Task";
 
+export interface IDateProvider {
+    today(): Date;
+}
+
 export function getEndPoint(
     {
         currentPoint,
@@ -21,9 +25,10 @@ export function getEndPoint(
 }
 
 /**
- * Generates tasks for the PacerPlan according to the action days, start date, end date, and total points.
- */
-export function generateTasksForPacerPlan(plan: PacerPlan): Task[] {
+* Generates tasks for the specified PacerPlan according to the plan's action days, start date, end date, and total points.
+*/
+export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDateProvider): Task[] {
+
     const tasks: Task[] = [];
 
     if (plan.totalQuantity <= 0) {
@@ -34,6 +39,11 @@ export function generateTasksForPacerPlan(plan: PacerPlan): Task[] {
 
     let remainingExtraPoints = plan.totalQuantity % availableActionDates.length;
     let currentPoint = plan.startNumber;
+
+    const todaysDate = dateProvider.today();
+    const originalStartDate = plan.startDate;
+
+    plan.startDate = todaysDate > originalStartDate ? todaysDate : plan.startDate;
 
     plan.availableActionDates.forEach((currentDate) => {
         const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: plan.endNumber });
@@ -53,7 +63,8 @@ export function generateTasksForPacerPlan(plan: PacerPlan): Task[] {
         }
     });
 
+    plan.startDate = originalStartDate;
     plan.tasks = tasks;
+
     return tasks;
 }
-

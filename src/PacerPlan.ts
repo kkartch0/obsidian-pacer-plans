@@ -1,7 +1,10 @@
 import { calculateAvailableActionDates } from "./dateHelper";
 import { Days, daysToShortString } from "./Days";
-import { getEndPoint } from "./PacerPlan.helper";
 import { Task } from "./Task";
+
+export interface IDateProvider {
+    today(): Date;
+}
 
 export class PacerPlan {
     title: string;
