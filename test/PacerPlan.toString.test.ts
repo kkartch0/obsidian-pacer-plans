@@ -6,41 +6,42 @@ describe("PacerPlan", () => {
     describe("toString", () => {
         it("should return the string representation of the PacerPlan", () => {
             // Arrange
-            const plan = new PacerPlan();
-            plan.title = "Getting Things Done";
-            plan.summary = "Read Getting Things Done by David Allen";
-            plan.quantityType = "Pages";
-            plan.startDate = new Date(2024, 7, 19);
-            plan.endDate = new Date(2024, 7, 23);
-            plan.actionDays = Days.Monday | Days.Tuesday | Days.Thursday;
-            plan.startNumber = 22;
-            plan.endNumber = 352;
-            plan.tasks = [ 
-                new Task({
-                    description: "Getting Things Done",
-                    quantityType: "Pages",
-                    startPoint: 22,
-                    endPoint: 132,
-                    scheduledDate: new Date(2024, 7, 19),
-                    completed: true
-                }),
-                new Task({
-                    description: "Getting Things Done",
-                    quantityType: "Pages",
-                    startPoint: 133,
-                    endPoint: 242,
-                    scheduledDate: new Date(2024, 7, 20),
-                    completed: false
-                }),
-                new Task({
-                    description: "Getting Things Done",
-                    quantityType: "Pages",
-                    startPoint: 243,
-                    endPoint: 352,
-                    scheduledDate: new Date(2024, 7, 22),
-                    completed: false
-                })
-            ];
+            const plan = new PacerPlan({
+                title: "Getting Things Done",
+                summary: "Read Getting Things Done by David Allen",
+                quantityType: "Pages",
+                startDate: new Date(2024, 7, 19),
+                endDate: new Date(2024, 7, 23),
+                actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
+                startNumber: 22,
+                endNumber: 352,
+                tasks: [
+                    new Task({
+                        description: "Getting Things Done",
+                        quantityType: "Pages",
+                        startPoint: 22,
+                        endPoint: 132,
+                        scheduledDate: new Date(2024, 7, 19),
+                        completed: true
+                    }),
+                    new Task({
+                        description: "Getting Things Done",
+                        quantityType: "Pages",
+                        startPoint: 133,
+                        endPoint: 242,
+                        scheduledDate: new Date(2024, 7, 20),
+                        completed: false
+                    }),
+                    new Task({
+                        description: "Getting Things Done",
+                        quantityType: "Pages",
+                        startPoint: 243,
+                        endPoint: 352,
+                        scheduledDate: new Date(2024, 7, 22),
+                        completed: false
+                    })
+                ]
+            });
 
             // Act
             const result = plan.toString();
