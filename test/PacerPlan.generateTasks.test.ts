@@ -1,5 +1,5 @@
+import { generateTasksForPacerPlan } from "../src/PacerPlan.helper";
 import { Days } from "../src/Days";
-import { calculateAvailableActionDates } from "../src/dateHelper";
 import { PacerPlan } from "../src/PacerPlan";
 import { Task } from "../src/Task";
 
@@ -16,7 +16,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = plan.generateTasks();
+            const result = generateTasksForPacerPlan(plan);
 
             expect(result).toEqual([
                 {
@@ -57,7 +57,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 24;
 
-            const result = plan.generateTasks();
+            const result = generateTasksForPacerPlan(plan);
 
             expect(result).toStrictEqual([
                 new Task({
@@ -113,7 +113,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = plan.generateTasks();
+            const result = generateTasksForPacerPlan(plan);
 
             expect(result).toEqual([]);
         });
@@ -128,7 +128,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = plan.generateTasks();
+            const result = generateTasksForPacerPlan(plan);
 
             expect(result).toEqual([]);
         });
