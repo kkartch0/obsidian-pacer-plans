@@ -60,43 +60,6 @@ export class PacerPlan {
         return this.totalQuantity / this.availableActionDates.length;
     }
 
-    /**
-     * Generates tasks for the PacerPlan according to the action days, start date, end date, and total points.
-     */
-    generateTasks(): Task[] {
-        const tasks: Task[] = [];
-
-        if (this.totalQuantity <= 0) {
-            return tasks;
-        }
-        const wholePointsPerDay = Math.floor(this.quantityPerDay);
-        const availableActionDates = this.availableActionDates;
-
-        let remainingExtraPoints = this.totalQuantity % availableActionDates.length;
-        let currentPoint = this.startNumber;
-
-        this.availableActionDates.forEach((currentDate) => {
-            const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: this.endNumber });
-
-            tasks.push(new Task({
-                description: this.title,
-                quantityType: this.quantityType,
-                startPoint: currentPoint,
-                endPoint: endPoint,
-                scheduledDate: currentDate,
-                completed: false
-            }));
-            currentPoint = endPoint + 1;
-
-            if (remainingExtraPoints > 0) {
-                --remainingExtraPoints;
-            }
-        });
-
-        this.tasks = tasks;
-        return tasks;
-    }
-
     toString(): string {
         let tasksString = this.tasks.map(task => task.toString()).join("\n");
 
