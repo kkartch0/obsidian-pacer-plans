@@ -4,7 +4,7 @@ import { PacerPlan } from "../src/PacerPlan";
 import { Task } from "../src/Task";
 
 describe("PacerPlan", () => {
-    describe("generateTasks", () => {
+    describe("generateTasksForPacerPlan", () => {
         it("scenario 1: should generate tasks for the PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
@@ -16,7 +16,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = generateTasksForPacerPlan(plan);
+            const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
 
             expect(result).toEqual([
                 {
@@ -57,7 +57,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 24;
 
-            const result = generateTasksForPacerPlan(plan);
+            const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 8, 2) });
 
             expect(result).toStrictEqual([
                 new Task({
@@ -113,7 +113,7 @@ describe("PacerPlan", () => {
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = generateTasksForPacerPlan(plan);
+            const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
 
             expect(result).toEqual([]);
         });
@@ -122,13 +122,13 @@ describe("PacerPlan", () => {
             const plan = new PacerPlan();
             plan.title = "Getting Things Done";
             plan.summary = "Read Getting Things Done by David Allen";
-            plan.startDate = new Date("2022-01-07");
-            plan.endDate = new Date("2022-01-01");
+            plan.startDate = new Date(2022, 1, 7);
+            plan.endDate = new Date(2022, 1, 1);
             plan.actionDays = Days.Monday | Days.Wednesday | Days.Friday;
             plan.startNumber = 1;
             plan.endNumber = 352;
 
-            const result = generateTasksForPacerPlan(plan);
+            const result = generateTasksForPacerPlan(plan, { today: () => new Date(2022, 1, 7) });
 
             expect(result).toEqual([]);
         });
