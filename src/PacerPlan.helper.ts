@@ -6,23 +6,20 @@ export interface IDateProvider {
     today(): Date;
 }
 
-export function getEndPoint(
+export function getCurrentTaskQuantity(
     {
-        currentPoint,
         wholePointsPerDay,
         remainingExtraPoints,
-        endNumber
     }: {
-        currentPoint: number;
         wholePointsPerDay: number;
         remainingExtraPoints: number;
-        endNumber: number;
     }
 ): number {
-    let endPoint = currentPoint + wholePointsPerDay - 1;
-    endPoint += remainingExtraPoints > 0 ? 1 : 0;
-    endPoint = Math.min(endPoint, endNumber);
-    return endPoint;
+    let currentTaskQuantity = wholePointsPerDay;
+    if (remainingExtraPoints > 0) {
+        currentTaskQuantity += 1;
+    }
+    return currentTaskQuantity;
 }
 
 /**
@@ -38,17 +35,20 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
 
     const todaysDate = dateProvider.today();
     const startDate = todaysDate > plan.startDate ? todaysDate : plan.startDate;
-
     const availableActionDates = calculateAvailableActionDates(startDate, plan.endDate, plan.actionDays);
-    const quantityPerDay = plan.totalQuantity / availableActionDates.length;
+
+    const quantitiesRemaining = getQuantitiesRemaining(plan);
+    const totalQuantity = quantitiesRemaining.length;
+
+    const quantityPerDay = totalQuantity / availableActionDates.length;
     const wholePointsPerDay = Math.floor(quantityPerDay);
 
-    let remainingExtraPoints = plan.totalQuantity % availableActionDates.length;
-    let currentPoint = plan.startNumber;
+    let remainingExtraPoints = totalQuantity % availableActionDates.length;
+    let currentPoint = 0;
 
     availableActionDates.forEach((currentDate) => {
-        const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: plan.endNumber });
-        const quantities = Array.from({ length: endPoint - currentPoint + 1 }, (_, i) => currentPoint + i);
+        const currentTaskQuantity = getCurrentTaskQuantity({ wholePointsPerDay, remainingExtraPoints });
+        const quantities = quantitiesRemaining.slice(currentPoint, currentPoint + currentTaskQuantity);
 
         tasks.push(new Task({
             description: plan.title,
@@ -57,7 +57,8 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
             scheduledDate: currentDate,
             completed: false
         }));
-        currentPoint = endPoint + 1;
+
+        currentPoint += currentTaskQuantity;
 
         if (remainingExtraPoints > 0) {
             --remainingExtraPoints;
@@ -65,4 +66,19 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
     });
 
     return tasks;
+}
+
+
+/**
+ * Returns a flat list of quatities from the specified tasks for each task that is not completed.
+ */
+function getQuantitiesRemaining(plan: PacerPlan): number[] {
+    if (plan.tasks.length > 0) {
+        return plan.tasks
+            .filter(task => !task.completed)
+            .reduce((quantities, task) => quantities.concat(task.quantities), [] as number[]);
+    } else {
+        // return an array of numbers from startNumber to endNumber
+        return Array.from({ length: plan.totalQuantity }, (_, i) => plan.startNumber + i);
+    }
 }
