@@ -48,12 +48,12 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
 
     availableActionDates.forEach((currentDate) => {
         const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: plan.endNumber });
+        const quantities = Array.from({ length: endPoint - currentPoint + 1 }, (_, i) => currentPoint + i);
 
         tasks.push(new Task({
             description: plan.title,
             quantityType: plan.quantityType,
-            startPoint: currentPoint,
-            endPoint: endPoint,
+            quantities,
             scheduledDate: currentDate,
             completed: false
         }));

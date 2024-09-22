@@ -1,32 +1,29 @@
 import pluralize from 'pluralize';
+import { getRangeString } from './Task.helper';
 
 export class Task {
     description: string;
     quantityType: string;
-    startPoint: number;
-    endPoint: number;
     scheduledDate: Date;
     completed: boolean;
+    quantities: number[];
 
     constructor({
         description,
         quantityType,
-        startPoint,
-        endPoint,
+        quantities,
         scheduledDate,
         completed
     }: {
         description: string;
         quantityType: string;
-        startPoint: number;
-        endPoint: number;
+        quantities: number[];
         scheduledDate: Date;
         completed: boolean;
     }) {
         this.description = description;
         this.quantityType = quantityType;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+        this.quantities = quantities;
         this.scheduledDate = scheduledDate;
         this.completed = completed;
     }
@@ -43,10 +40,9 @@ export class Task {
      */
     toString(): string {
         const prefix = this.completed ? "- [x]" : "- [ ]";
-        const rangeString = (this.startPoint === this.endPoint) ? 
-            this.startPoint.toString() : `${this.startPoint}-${this.endPoint}`; 
+        const rangeString = getRangeString(this.quantities); 
 
-        const totalQuantity = this.endPoint - this.startPoint + 1;
+        const totalQuantity = this.quantities.length;
         const label = pluralize(this.quantityType, totalQuantity, false).toLowerCase();
 
         return `${prefix} ${this.description} (${label} ${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;

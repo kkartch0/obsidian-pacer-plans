@@ -7,8 +7,7 @@ describe("toString", () => {
                 const task = new Task({
                     description: "Completed Task",
                     quantityType: "Pages",
-                    startPoint: 100,
-                    endPoint: 100,
+                    quantities: [100],
                     scheduledDate: new Date("2022-01-01"),
                     completed: false
                 });
@@ -24,8 +23,7 @@ describe("toString", () => {
                 const task = new Task({
                     description: "Sample Task",
                     quantityType: "Pages",
-                    startPoint: 100,
-                    endPoint: 100,
+                    quantities: [100],
                     scheduledDate: new Date("2022-01-01"),
                     completed: true
                 });
@@ -43,15 +41,14 @@ describe("toString", () => {
                 const task = new Task({
                     description: "Sample Task",
                     quantityType: "Pages",
-                    startPoint: 50,
-                    endPoint: 100,
+                    quantities: [55, 56, 57, 58, 59, 60],
                     scheduledDate: new Date("2022-02-01"),
                     completed: false
                 });
 
                 const result = task.toString();
 
-                expect(result).toEqual("- [ ] Sample Task (pages 50-100) ⏳ 2022-02-01");
+                expect(result).toEqual("- [ ] Sample Task (pages 55-60) ⏳ 2022-02-01");
             });
         });
 
@@ -60,15 +57,14 @@ describe("toString", () => {
                 const task = new Task({
                     description: "Completed Task",
                     quantityType: "Pages",
-                    startPoint: 50,
-                    endPoint: 100,
+                    quantities: [50, 51, 52, 53, 54, 55],
                     scheduledDate: new Date("2022-02-01"),
                     completed: true
                 });
 
                 const result = task.toString();
 
-                expect(result).toEqual("- [x] Completed Task (pages 50-100) ⏳ 2022-02-01");
+                expect(result).toEqual("- [x] Completed Task (pages 50-55) ⏳ 2022-02-01");
             });
         });
     });

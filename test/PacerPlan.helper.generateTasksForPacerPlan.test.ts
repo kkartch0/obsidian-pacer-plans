@@ -7,43 +7,40 @@ describe("PacerPlan", () => {
     describe("generateTasksForPacerPlan", () => {
         it("scenario 1: should generate tasks for the PacerPlan", () => {
             const plan = new PacerPlan({
-                title: "Getting Things Done",
-                summary: "Read Getting Things Done by David Allen",
+                title: "Book",
+                summary: "Read Book by Author",
                 quantityType: "Pages",
                 startDate: new Date(2024, 7, 19),
                 endDate: new Date(2024, 7, 23),
                 actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
                 startNumber: 1,
-                endNumber: 352
+                endNumber: 12
             });
 
             const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
 
             expect(result).toEqual([
-                {
-                    description: "Getting Things Done",
+                new Task({
+                    description: "Book",
                     quantityType: "Pages",
-                    startPoint: 1,
-                    endPoint: 118,
+                    quantities: [1, 2, 3, 4],
                     scheduledDate: new Date(2024, 7, 19),
                     completed: false
-                },
-                {
-                    description: "Getting Things Done",
+                }),
+                new Task({
+                    description: "Book",
                     quantityType: "Pages",
-                    startPoint: 119,
-                    endPoint: 235,
+                    quantities: [5, 6, 7, 8],
                     scheduledDate: new Date(2024, 7, 20),
                     completed: false
-                },
-                {
-                    description: "Getting Things Done",
+                }),
+                new Task({
+                    description: "Book",
                     quantityType: "Pages",
-                    startPoint: 236,
-                    endPoint: 352,
+                    quantities: [9, 10, 11, 12],
                     scheduledDate: new Date(2024, 7, 22),
                     completed: false
-                }
+                })
             ]);
         });
 
@@ -65,40 +62,35 @@ describe("PacerPlan", () => {
                 new Task({
                     description: "Math Problems",
                     quantityType: "Problems",
-                    startPoint: 1,
-                    endPoint: 5,
+                    quantities: [1, 2, 3, 4, 5],
                     scheduledDate: new Date(2024, 8, 2),
                     completed: false
                 }),
                 new Task({
                     description: "Math Problems",
                     quantityType: "Problems",
-                    startPoint: 6,
-                    endPoint: 10,
+                    quantities: [6, 7, 8, 9, 10],
                     scheduledDate: new Date(2024, 8, 3),
                     completed: false
                 }),
                 new Task({
                     description: "Math Problems",
                     quantityType: "Problems",
-                    startPoint: 11,
-                    endPoint: 15,
+                    quantities: [11, 12, 13, 14, 15],
                     scheduledDate: new Date(2024, 8, 4),
                     completed: false
                 }),
                 new Task({
                     description: "Math Problems",
                     quantityType: "Problems",
-                    startPoint: 16,
-                    endPoint: 20,
+                    quantities: [16, 17, 18, 19, 20],
                     scheduledDate: new Date(2024, 8, 5),
                     completed: false
                 }),
                 new Task({
                     description: "Math Problems",
                     quantityType: "Problems",
-                    startPoint: 21,
-                    endPoint: 24,
+                    quantities: [21, 22, 23, 24],
                     scheduledDate: new Date(2024, 8, 6),
                     completed: false
                 }),
