@@ -37,6 +37,9 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
     const startDate = todaysDate > plan.startDate ? todaysDate : plan.startDate;
     const availableActionDates = calculateAvailableActionDates(startDate, plan.endDate, plan.actionDays);
 
+    const completedTasks = plan.tasks.filter(task => task.completed);
+    tasks.push(...completedTasks);
+
     const quantitiesRemaining = getQuantitiesRemaining(plan);
     const totalQuantity = quantitiesRemaining.length;
 
