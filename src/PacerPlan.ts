@@ -55,14 +55,6 @@ export class PacerPlan {
         return this.endNumber - this.startNumber + 1;
     }
 
-    get availableActionDates(): Date[] {
-        return calculateAvailableActionDates(this.startDate, this.endDate, this.actionDays);
-    }
-
-    get quantityPerDay(): number {
-        return this.totalQuantity / this.availableActionDates.length;
-    }
-
     toString(): string {
         let tasksString = this.tasks.map(task => task.toString()).join("\n");
 

@@ -1,7 +1,7 @@
 import { Modal, App, Setting } from "obsidian";
 import { PacerPlan } from "./PacerPlan";
 import { Days, shortStringToDays } from "./Days";
-import { data } from "cheerio/lib/api/attributes";
+import { calculateAvailableActionDates } from "./dateHelper";
 
 export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
@@ -67,7 +67,6 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text.onChange((value) => {
 					this.result.quantityType = value;
-					this.displayPlanInformation(contentEl);
 				})
 			);
 
@@ -173,12 +172,14 @@ export class PacerPlanEditCreateModal extends Modal {
 		// Display the number of action days the plan is active
 		const row2 = this.planInformationTable.createEl("tr");
 		row2.createEl("td", { text: "Number of Action Days" });
-		row2.createEl("td", { text: this.result.availableActionDates.length.toString() });
+		const availableActionDates = calculateAvailableActionDates(this.result.startDate, this.result.endDate, this.result.actionDays);
+		row2.createEl("td", { text: availableActionDates.length.toString() });
 
 		// Display the quantity of work to be done per day
 		const row3 = this.planInformationTable.createEl("tr");
 		row3.createEl("td", { text: "Avg. Quantity per Action Day" });
-		row3.createEl("td", { text: this.result.quantityPerDay.toFixed(2) });
+		const quantityPerDay = this.result.totalQuantity / availableActionDates.length;
+		row3.createEl("td", { text: quantityPerDay.toFixed(2) });
 
 		this.AddButtons(contentEl);
 	}
