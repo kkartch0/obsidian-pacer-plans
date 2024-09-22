@@ -33,6 +33,8 @@ export class PacerPlanEditCreateModal extends Modal {
 		this.setDefaultTitleName();
 
 		this.result.startDate = new Date();
+		this.result.startDate.setHours(0, 0, 0, 0);
+
 		this.result.actionDays = Days.Everyday;
 		this.result.startNumber = 1;
 		this.result.endNumber = 1;
@@ -101,7 +103,8 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text
 					.onChange((value) => {
-						this.result.startDate = new Date(value);
+						const dateParts = value.split("-").map((part) => Number.parseInt(part));
+						this.result.startDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
 						this.displayPlanInformation(contentEl);
 					})
 					.setPlaceholder("YYYY-MM-DD")
@@ -115,7 +118,9 @@ export class PacerPlanEditCreateModal extends Modal {
 				text
 					.onChange(
 						(value) => {
-							this.result.endDate = new Date(value);
+							const dateParts = value.split("-").map((part) => Number.parseInt(part));
+							this.result.endDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+
 							this.displayPlanInformation(contentEl);
 						}
 					)
