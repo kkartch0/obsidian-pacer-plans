@@ -26,7 +26,13 @@ export default class PacerPlansPlugin extends Plugin {
 			name: 'Create new Pacer Plan',
 			callback: () => {
 				new PacerPlanEditCreateModal(this.app, async (result) => {
-					generateTasksForPacerPlan(result);
+					result.tasks = generateTasksForPacerPlan(result, {
+						today: () => {
+							const date = new Date();
+							date.setHours(0, 0, 0, 0);
+							return date;
+						}
+					});
 
 					let resultString = result.toString();
 					console.log("Pacer Plan:")
@@ -38,7 +44,7 @@ export default class PacerPlansPlugin extends Plugin {
 
 					// open the newly created file
 					this.app.workspace.getLeaf("tab").openFile(planFile);
-					
+
 				}).open();
 			}
 		});

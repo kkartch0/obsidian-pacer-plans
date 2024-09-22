@@ -1,3 +1,4 @@
+import { calculateAvailableActionDates } from "./dateHelper";
 import { PacerPlan } from "./PacerPlan";
 import { Task } from "./Task";
 
@@ -34,18 +35,18 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
     if (plan.totalQuantity <= 0) {
         return tasks;
     }
-    const wholePointsPerDay = Math.floor(plan.quantityPerDay);
-    const availableActionDates = plan.availableActionDates;
+
+    const todaysDate = dateProvider.today();
+    const startDate = todaysDate > plan.startDate ? todaysDate : plan.startDate;
+
+    const availableActionDates = calculateAvailableActionDates(startDate, plan.endDate, plan.actionDays);
+    const quantityPerDay = plan.totalQuantity / availableActionDates.length;
+    const wholePointsPerDay = Math.floor(quantityPerDay);
 
     let remainingExtraPoints = plan.totalQuantity % availableActionDates.length;
     let currentPoint = plan.startNumber;
 
-    const todaysDate = dateProvider.today();
-    const originalStartDate = plan.startDate;
-
-    plan.startDate = todaysDate > originalStartDate ? todaysDate : plan.startDate;
-
-    plan.availableActionDates.forEach((currentDate) => {
+    availableActionDates.forEach((currentDate) => {
         const endPoint = getEndPoint({ currentPoint, wholePointsPerDay, remainingExtraPoints, endNumber: plan.endNumber });
 
         tasks.push(new Task({
@@ -62,9 +63,6 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
             --remainingExtraPoints;
         }
     });
-
-    plan.startDate = originalStartDate;
-    plan.tasks = tasks;
 
     return tasks;
 }
