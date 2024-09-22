@@ -89,11 +89,12 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     const endPoint = parseInt(endPointString);
     const scheduledDate = new Date(scheduledDateString);
 
+    const quantities = Array.from({ length: endPoint - startPoint + 1 }, (_, i) => startPoint + i);
+
     return new Task({
         description,
         quantityType,
-        startPoint,
-        endPoint,
+        quantities,
         completed,
         scheduledDate
     });

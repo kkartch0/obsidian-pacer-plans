@@ -7,36 +7,33 @@ describe("PacerPlan", () => {
         it("should return the string representation of the PacerPlan", () => {
             // Arrange
             const plan = new PacerPlan({
-                title: "Getting Things Done",
-                summary: "Read Getting Things Done by David Allen",
+                title: "Book",
+                summary: "Read Book by Author",
                 quantityType: "Pages",
                 startDate: new Date(2024, 7, 19),
                 endDate: new Date(2024, 7, 23),
                 actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
-                startNumber: 22,
-                endNumber: 352,
+                startNumber: 5,
+                endNumber: 19,
                 tasks: [
                     new Task({
-                        description: "Getting Things Done",
+                        description: "Book",
                         quantityType: "Pages",
-                        startPoint: 22,
-                        endPoint: 132,
+                        quantities: [5, 6, 7, 8, 9],
                         scheduledDate: new Date(2024, 7, 19),
                         completed: true
                     }),
                     new Task({
-                        description: "Getting Things Done",
+                        description: "Book",
                         quantityType: "Pages",
-                        startPoint: 133,
-                        endPoint: 242,
+                        quantities: [10, 11, 12, 13, 14],
                         scheduledDate: new Date(2024, 7, 20),
                         completed: false
                     }),
                     new Task({
-                        description: "Getting Things Done",
+                        description: "Book",
                         quantityType: "Pages",
-                        startPoint: 243,
-                        endPoint: 352,
+                        quantities: [15, 16, 17, 18, 19],
                         scheduledDate: new Date(2024, 7, 22),
                         completed: false
                     })
@@ -48,17 +45,17 @@ describe("PacerPlan", () => {
 
             // Assert
             expect(result).toEqual(`---
-summary: Read Getting Things Done by David Allen
+summary: Read Book by Author
 startDate: 2024-08-19
 endDate: 2024-08-23
 actionDays: MTR
 quantityType: Pages
-startNumber: 22
-endNumber: 352
+startNumber: 5
+endNumber: 19
 ---
-- [x] Getting Things Done (pages 22-132) ⏳ 2024-08-19
-- [ ] Getting Things Done (pages 133-242) ⏳ 2024-08-20
-- [ ] Getting Things Done (pages 243-352) ⏳ 2024-08-22
+- [x] Book (pages 5-9) ⏳ 2024-08-19
+- [ ] Book (pages 10-14) ⏳ 2024-08-20
+- [ ] Book (pages 15-19) ⏳ 2024-08-22
 `);
         });
     });
