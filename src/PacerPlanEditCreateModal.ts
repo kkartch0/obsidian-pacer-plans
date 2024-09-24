@@ -1,7 +1,7 @@
 import { Modal, App, Setting } from "obsidian";
 import { PacerPlan } from "./PacerPlan";
 import { Days, shortStringToDays } from "./Days";
-import { calculateAvailableActionDates } from "./dateHelper";
+import { calculateAvailableActionDates } from "./dateHelpers";
 
 export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;

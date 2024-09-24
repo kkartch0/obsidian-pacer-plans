@@ -1,4 +1,4 @@
-import { calculateAvailableActionDates } from "./dateHelper";
+import { calculateAvailableActionDates } from "./dateHelpers";
 import { Days, daysToShortString } from "./Days";
 import { Task } from "./Task";
 

@@ -1,4 +1,4 @@
-import { availableDays } from "../src/dateHelper";
+import { availableDays } from "../src/dateHelpers";
 
 describe('daysBetween', () => {
     it('should return the correct number of days between two dates', () => {
