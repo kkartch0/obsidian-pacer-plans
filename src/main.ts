@@ -1,7 +1,8 @@
-import { Plugin } from 'obsidian';
+import { MarkdownView, Notice, Plugin } from 'obsidian';
 import { PacerPlanSettingsTab } from './PacerPlanSettingsTab';
 import { PacerPlanEditCreateModal } from './PacerPlanEditCreateModal';
 import { generateTasksForPacerPlan } from './PacerPlan.helper';
+import { createPacerPlanFromString } from './pacerPlanStringParsing';
 import { dateProvider } from './dateProvider';
 
 // Remember to rename these classes and interfaces!
@@ -40,6 +41,43 @@ export default class PacerPlansPlugin extends Plugin {
 					this.app.workspace.getLeaf("tab").openFile(planFile);
 
 				}).open();
+			}
+		});
+
+		this.addCommand({
+			id: "recalculate-pacer-plan-tasks",
+			name: "Recalculate Pacer Plan tasks",
+			callback: async () => {
+				// load in the current file
+				const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (!activeView) {
+					new Notice("No active view");
+					return;
+				}
+
+				const file = activeView.file;
+				if (!file) {
+					new Notice("No active file");
+					return;
+				}
+
+				const fileContents = await this.app.vault.read(file);
+				const fileTitle = file.basename;
+
+				const plan = createPacerPlanFromString(fileTitle, fileContents);
+
+				console.log("Recalculating tasks for plan:");
+				console.log(plan);
+				console.log("Plan:");
+				console.log(plan.toString())
+
+				plan.tasks = generateTasksForPacerPlan(plan, dateProvider);
+
+				console.log("Updated Plan:");
+				const updatedPlanString = plan.toString();
+				console.log(updatedPlanString)
+
+				await this.app.vault.modify(file, updatedPlanString);
 			}
 		});
 
