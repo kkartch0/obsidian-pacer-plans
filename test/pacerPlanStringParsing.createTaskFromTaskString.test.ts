@@ -3,7 +3,7 @@ import { Task } from "../src/Task";
 
 describe("createTaskFromTaskString", () => {
     it("should create a Task object from a task string", () => {
-        const taskString = "- [x] Getting Things Done (1-11) ⏳ 2024-08-19";
+        const taskString = "- [x] Getting Things Done (pages 1-11) ⏳ 2024-08-19";
         const expectedTask = new Task({
             description: "Getting Things Done",
             quantityType: "Pages",
