@@ -1,10 +1,5 @@
-import { calculateAvailableActionDates } from "./dateHelpers";
 import { Days, daysToShortString } from "./Days";
 import { Task } from "./Task";
-
-export interface IDateProvider {
-    today(): Date;
-}
 
 export class PacerPlan {
     title: string;

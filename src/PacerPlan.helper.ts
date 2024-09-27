@@ -1,10 +1,7 @@
 import { calculateAvailableActionDates } from "./dateHelpers";
+import { IDateProvider } from "./dateProvider";
 import { PacerPlan } from "./PacerPlan";
 import { Task } from "./Task";
-
-export interface IDateProvider {
-    today(): Date;
-}
 
 export function getCurrentTaskQuantity(
     {
