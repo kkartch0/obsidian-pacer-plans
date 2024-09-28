@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-pacer-plans",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Pace out your tasks and plans in Obsidian.",
 	"main": "main.js",
 	"scripts": {
