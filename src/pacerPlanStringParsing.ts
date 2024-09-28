@@ -1,3 +1,4 @@
+import { dateStringToDate } from "./dateHelpers";
 import { shortStringToDays } from "./Days";
 import { PacerPlan } from "./PacerPlan";
 import { Task } from "./Task";
@@ -67,7 +68,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     // startPoint: 1
     // endPoint: 118
     // scheduledDate: 2024-08-19
-    const taskRegex = /^- (\[.\]) (.+) \((\d+)-(\d+)\) ⏳ (\d{4}-\d{2}-\d{2})$/;
+    const taskRegex = /^- (\[.\]) (.+) \(.*?(\d+)-(\d+)\) ⏳ (\d{4}-\d{2}-\d{2})$/;
 
     const match = taskString.match(taskRegex);
 
@@ -115,10 +116,10 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
             plan.summary = value;
             break;
         case "startDate":
-            plan.startDate = new Date(value);
+            plan.startDate = dateStringToDate(value);
             break;
         case "endDate":
-            plan.endDate = new Date(value);
+            plan.endDate = dateStringToDate(value); 
             break;
         case "actionDays":
             plan.actionDays = shortStringToDays(value);

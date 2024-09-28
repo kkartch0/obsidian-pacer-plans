@@ -28,8 +28,8 @@ endNumber: 19
         const expectedPlan = new PacerPlan({
             title: "Book",
             summary: "Read Book by Author",
-            startDate: new Date("2024-08-19"),
-            endDate: new Date("2024-08-23"),
+            startDate: new Date(2024, 7, 19),
+            endDate: new Date(2024, 7, 23),
             actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
             quantityType: "Pages",
             startNumber: 5,

@@ -1,5 +1,5 @@
 import { Days } from "../src/Days";
-import { isActionDay} from "../src/dateHelper";
+import { isActionDay } from "../src/dateHelpers";
 
 describe("isActionDay", () => {
     it("should return true if the given day is an action day", () => {

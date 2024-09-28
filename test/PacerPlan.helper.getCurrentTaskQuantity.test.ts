@@ -1,36 +1,30 @@
-import { getEndPoint } from "../src/PacerPlan.helper";
+import { getCurrentTaskQuantity } from "../src/PacerPlan.helper";
 
-describe("getEndPoint", () => {
+describe("getCurrentTaskQuantity", () => {
     it("should calculate the correct end point when there are no remaining extra points", () => {
-        const result = getEndPoint({ 
-            currentPoint: 100, 
+        const result = getCurrentTaskQuantity({ 
             wholePointsPerDay: 50, 
             remainingExtraPoints: 0,
-            endNumber: 149
         });
 
-        expect(result).toEqual(149);
+        expect(result).toEqual(50);
     });
 
     it("should calculate the correct end point when there are remaining extra points", () => {
-        const result = getEndPoint({ 
-            currentPoint: 200, 
+        const result = getCurrentTaskQuantity({ 
             wholePointsPerDay: 50, 
             remainingExtraPoints: 10,
-            endNumber: 249
         });
 
-        expect(result).toEqual(249);
+        expect(result).toEqual(51);
     });
 
     it("should not exceed the total points as the end point", () => {
-        const result = getEndPoint({ 
-            currentPoint: 300, 
+        const result = getCurrentTaskQuantity({ 
             wholePointsPerDay: 100, 
             remainingExtraPoints: 50,
-            endNumber: 350
         });
 
-        expect(result).toEqual(350);
+        expect(result).toEqual(101);
     });
 });

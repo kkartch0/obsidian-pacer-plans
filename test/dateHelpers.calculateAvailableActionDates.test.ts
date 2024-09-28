@@ -1,5 +1,5 @@
 import { Days } from "../src/Days";
-import { calculateAvailableActionDates as calculateAvailableActionDates } from "../src/dateHelper";
+import { calculateAvailableActionDates } from "../src/dateHelpers";
 
 describe("calculateAvailableActionDates", () => {
     it("should return an empty array if there are no available action days", () => {

@@ -1,7 +1,7 @@
 import { Modal, App, Setting } from "obsidian";
 import { PacerPlan } from "./PacerPlan";
 import { Days, shortStringToDays } from "./Days";
-import { calculateAvailableActionDates } from "./dateHelper";
+import { calculateAvailableActionDates, dateStringToDate } from "./dateHelpers";
 
 export class PacerPlanEditCreateModal extends Modal {
 	result: PacerPlan;
@@ -103,8 +103,7 @@ export class PacerPlanEditCreateModal extends Modal {
 			.addText((text) =>
 				text
 					.onChange((value) => {
-						const dateParts = value.split("-").map((part) => Number.parseInt(part));
-						this.result.startDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+						this.result.startDate = dateStringToDate(value);
 						this.displayPlanInformation(contentEl);
 					})
 					.setPlaceholder("YYYY-MM-DD")
@@ -118,9 +117,8 @@ export class PacerPlanEditCreateModal extends Modal {
 				text
 					.onChange(
 						(value) => {
-							const dateParts = value.split("-").map((part) => Number.parseInt(part));
-							this.result.endDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
 
+							this.result.endDate = dateStringToDate(value);
 							this.displayPlanInformation(contentEl);
 						}
 					)

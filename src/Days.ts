@@ -1,4 +1,4 @@
-import { isActionDay } from "./dateHelper";
+import { isActionDay } from "./dateHelpers";
 
 export enum Days {
     None = 0,
