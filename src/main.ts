@@ -78,6 +78,8 @@ export default class PacerPlansPlugin extends Plugin {
 				console.log(updatedPlanString)
 
 				await this.app.vault.modify(file, updatedPlanString);
+
+				new Notice("Pacer Plan recalculated successfully");
 			}
 		});
 
