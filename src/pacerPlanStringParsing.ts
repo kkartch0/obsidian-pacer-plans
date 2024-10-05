@@ -12,17 +12,18 @@ import { Task } from "./Task";
  * 
  * @example
  * const planString = `---
- * title: Getting Things Done
  * summary: Read Getting Things Done by David Allen
  * startDate: 2024-08-19
  * endDate: 2024-08-23
  * actionDays: MTR
- * totalQuantity: 352
+ * quantityType: Pages
+ * startNumber: 1
+ * endNumber: 352
  * ---
 
- * - [x] Getting Things Done (1-118) ⏳ 2024-08-19
- * - [ ] Getting Things Done (119-235) ⏳ 2024-08-20
- * - [ ] Getting Things Done (236-352) ⏳ 2024-08-22
+ * - [x] Getting Things Done (pages 1-118) ⏳ 2024-08-19
+ * - [ ] Getting Things Done (pages 119-235) ⏳ 2024-08-20
+ * - [ ] Getting Things Done (pages 236-352) ⏳ 2024-08-22
  * `
  * 
  * const plan = createPacerPlanFromString(planString);
@@ -32,7 +33,9 @@ import { Task } from "./Task";
  * console.log(plan.startDate); // Output: "2024-08-19"
  * console.log(plan.endDate); // Output: "2024-08-23"
  * console.log(plan.actionDays); // Output: "MTR"
- * console.log(plan.totalQuantity); // Output: 352
+ * cosole.log(plan.quantityType); // Output: "Pages"
+ * console.log(plan.startNumber); // Output: 1
+ * console.log(plan.endNumber); // Output: 352
  * console.log(plan.tasks); // Output: [Task, Task, Task]
  */
 export function createPacerPlanFromString(
@@ -62,13 +65,13 @@ export function createPacerPlanFromString(
 export function createTaskFromTaskString(taskString: string, quantityType: string): Task {
 
     // regex to match the task string
-    // - [x] Getting Things Done (1-118) ⏳ 2024-08-19
+    // - [x] Getting Things Done (pages 1-118) ⏳ 2024-08-19
     // status: [x] - completed, [ ] - not completed
     // description: Getting Things Done
     // startPoint: 1
     // endPoint: 118
     // scheduledDate: 2024-08-19
-    const taskRegex = /^- (\[.\]) (.+) \(.*?(\d+)-(\d+)\) ⏳ (\d{4}-\d{2}-\d{2})$/;
+    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\) ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})$/;
 
     const match = taskString.match(taskRegex);
 
@@ -76,18 +79,24 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
         throw new Error("Invalid task string");
     }
 
-    const [
-        _,
+    const {
         status,
         description,
         startPointString,
         endPointString,
         scheduledDateString
-    ] = match;
+    } = match.groups!;
 
     const completed = status === "[x]";
     const startPoint = parseInt(startPointString);
-    const endPoint = parseInt(endPointString);
+
+    let endPoint: number | undefined = undefined;
+    if (endPointString === undefined) {
+        endPoint = startPoint;
+    } else {
+        endPoint = parseInt(endPointString);
+    }
+
     const scheduledDate = dateStringToDate(scheduledDateString);
 
     const quantities = Array.from({ length: endPoint - startPoint + 1 }, (_, i) => startPoint + i);
@@ -119,7 +128,7 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
             plan.startDate = dateStringToDate(value);
             break;
         case "endDate":
-            plan.endDate = dateStringToDate(value); 
+            plan.endDate = dateStringToDate(value);
             break;
         case "actionDays":
             plan.actionDays = shortStringToDays(value);
