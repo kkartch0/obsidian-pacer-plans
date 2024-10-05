@@ -73,7 +73,7 @@ quantityType: Pages
 startNumber: 1
 endNumber: 4
 ---
-- [x] Book (pages 1-2) ⏳ 2024-08-19
+- [x] Book (pages 1-2) ⏳ 2024-08-19 ✅ 2024-08-19
 - [ ] Book (page 3) ⏳ 2024-08-20
 - [ ] Book (page 4) ⏳ 2024-08-22
 `;
