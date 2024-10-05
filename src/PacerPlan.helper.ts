@@ -32,7 +32,23 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
 
     const todaysDate = dateProvider.today();
     const startDate = todaysDate > plan.startDate ? todaysDate : plan.startDate;
-    const availableActionDates = calculateAvailableActionDates(startDate, plan.endDate, plan.actionDays);
+
+    let availableActionDates = calculateAvailableActionDates(startDate, plan.endDate, plan.actionDays);
+
+    const includeTodayWhenItHasCompletedTask = true;
+    const todayHasCompletedTask = plan.tasks.some(task => { 
+        const dateIsToday = datesAreEqual(task.scheduledDate, todaysDate);
+        return task.completed && dateIsToday; 
+    });
+
+    if (includeTodayWhenItHasCompletedTask && todayHasCompletedTask) {
+        // remove todaysDate from the list of availableActionDates
+        availableActionDates = availableActionDates.filter(date => !datesAreEqual(date, todaysDate));
+    }
+
+    if (availableActionDates.length === 0) {
+        return tasks;
+    }
 
     const completedTasks = plan.tasks.filter(task => task.completed);
     tasks.push(...completedTasks);
@@ -81,4 +97,10 @@ function getQuantitiesRemaining(plan: PacerPlan): number[] {
         // return an array of numbers from startNumber to endNumber
         return Array.from({ length: plan.totalQuantity }, (_, i) => plan.startNumber + i);
     }
+}
+
+function datesAreEqual(date1: Date, date2: Date): boolean {
+    return date1.getFullYear() === date2.getFullYear() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getDate() === date2.getDate();
 }
