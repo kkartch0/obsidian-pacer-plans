@@ -89,13 +89,21 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
  * Returns a flat list of quatities from the specified tasks for each task that is not completed.
  */
 function getQuantitiesRemaining(plan: PacerPlan): number[] {
+    const fullQuantitySet = Array.from({ length: plan.totalQuantity }, (_, i) => plan.startNumber + i);
+
     if (plan.tasks.length > 0) {
-        return plan.tasks
-            .filter(task => !task.completed)
-            .reduce((quantities, task) => quantities.concat(task.quantities), [] as number[]);
+        const completedTasks = plan.tasks.filter(task => task.completed);
+
+        // add quauntities from completed tasks to a set of completed quantities
+        const completedQuantities = new Set<number>();
+        completedTasks.forEach(task => task.quantities.forEach(quantity => completedQuantities.add(quantity)));
+
+        // return quantities that are not in the set of completed quantities
+        return fullQuantitySet.filter(quantity => !completedQuantities.has(quantity));
+
     } else {
         // return an array of numbers from startNumber to endNumber
-        return Array.from({ length: plan.totalQuantity }, (_, i) => plan.startNumber + i);
+        return fullQuantitySet;
     }
 }
 
