@@ -88,7 +88,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     const completed = status === "[x]";
     const startPoint = parseInt(startPointString);
     const endPoint = parseInt(endPointString);
-    const scheduledDate = new Date(scheduledDateString);
+    const scheduledDate = dateStringToDate(scheduledDateString);
 
     const quantities = Array.from({ length: endPoint - startPoint + 1 }, (_, i) => startPoint + i);
 

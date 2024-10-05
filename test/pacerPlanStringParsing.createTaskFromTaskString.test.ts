@@ -9,7 +9,7 @@ describe("createTaskFromTaskString", () => {
             quantityType: "Pages",
             quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             completed: true,
-            scheduledDate: new Date("2024-08-19")
+            scheduledDate: new Date(2024, 7, 19)
         });
 
         const result = createTaskFromTaskString(taskString, "Pages");

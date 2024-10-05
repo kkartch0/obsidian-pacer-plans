@@ -40,21 +40,21 @@ endNumber: 19
                     quantityType: "Pages",
                     quantities: [5, 6, 7, 8, 9],
                     completed: true,
-                    scheduledDate: new Date("2024-08-19")
+                    scheduledDate: new Date(2024, 7, 19)
                 }),
                 new Task({
                     description: "Book",
                     quantityType: "Pages",
                     quantities: [10, 11, 12, 13, 14],
                     completed: false,
-                    scheduledDate: new Date("2024-08-20")
+                    scheduledDate: new Date(2024, 7, 20)
                 }),
                 new Task({
                     description: "Book",
                     quantityType: "Pages",
                     quantities: [15, 16, 17, 18, 19],
                     completed: false,
-                    scheduledDate: new Date("2024-08-22")
+                    scheduledDate: new Date(2024, 7, 22)
                 })
             ]
         }
