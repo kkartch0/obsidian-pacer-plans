@@ -63,8 +63,13 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
     let currentPoint = 0;
 
     availableActionDates.forEach((currentDate) => {
-        const currentTaskQuantity = getCurrentTaskQuantity({ wholePointsPerDay, remainingExtraPoints });
-        const quantities = quantitiesRemaining.slice(currentPoint, currentPoint + currentTaskQuantity);
+        const currentTaskQuantityToAssign = getCurrentTaskQuantity({ wholePointsPerDay, remainingExtraPoints });
+
+        if (currentTaskQuantityToAssign === 0) { // no more quantities to assign
+            return;
+        }
+
+        const quantities = quantitiesRemaining.slice(currentPoint, currentPoint + currentTaskQuantityToAssign);
 
         tasks.push(new Task({
             description: plan.title,
@@ -74,7 +79,7 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
             completed: false
         }));
 
-        currentPoint += currentTaskQuantity;
+        currentPoint += currentTaskQuantityToAssign;
 
         if (remainingExtraPoints > 0) {
             --remainingExtraPoints;
