@@ -64,22 +64,28 @@ export default class PacerPlansPlugin extends Plugin {
 				const fileContents = await this.app.vault.read(file);
 				const fileTitle = file.basename;
 
-				const plan = createPacerPlanFromString(fileTitle, fileContents);
+				try {
+					const plan = createPacerPlanFromString(fileTitle, fileContents);
+					console.log("Recalculating tasks for plan:");
+					console.log(plan);
+					console.log("Plan:");
+					console.log(plan.toString())
 
-				console.log("Recalculating tasks for plan:");
-				console.log(plan);
-				console.log("Plan:");
-				console.log(plan.toString())
+					plan.tasks = generateTasksForPacerPlan(plan, dateProvider);
 
-				plan.tasks = generateTasksForPacerPlan(plan, dateProvider);
+					console.log("Updated Plan:");
+					const updatedPlanString = plan.toString();
+					console.log(updatedPlanString)
 
-				console.log("Updated Plan:");
-				const updatedPlanString = plan.toString();
-				console.log(updatedPlanString)
+					await this.app.vault.modify(file, updatedPlanString);
 
-				await this.app.vault.modify(file, updatedPlanString);
+					new Notice("Pacer Plan recalculated successfully");
 
-				new Notice("Pacer Plan recalculated successfully");
+				} catch (error) {
+					new Notice("Error parsing Pacer Plan: " + error.message);
+					return;
+				}
+
 			}
 		});
 
