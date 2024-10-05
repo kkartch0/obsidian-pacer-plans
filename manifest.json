@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-pacer-plans",
 	"name": "Obsidian Pacer Plans",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"minAppVersion": "0.15.0",
 	"description": "Pace out your tasks and plans in Obsidian.",
 	"author": "Ky Kartchner",
