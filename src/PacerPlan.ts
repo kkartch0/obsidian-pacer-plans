@@ -1,8 +1,9 @@
 import { Days, daysToShortString } from "./Days";
+import { sanitizeForFileName } from "./sanitizeForFilename";
 import { Task } from "./Task";
 
 export class PacerPlan {
-    title: string;
+    private _title: string;
     summary: string;
     startDate: Date;
     endDate: Date;
@@ -35,7 +36,7 @@ export class PacerPlan {
             tasks?: Task[],
             quantityType?: string
         } = {}) {
-        this.title = title || "";
+        this._title = sanitizeForFileName(title || "");
         this.summary = summary || "";
         this.startDate = startDate || new Date();
         this.endDate = endDate || new Date();
@@ -44,6 +45,14 @@ export class PacerPlan {
         this.endNumber = endNumber || 0;
         this.quantityType = quantityType || "";
         this.tasks = tasks || [];
+    }
+
+    set title(value: string) {
+        this._title = sanitizeForFileName(value || "");
+    }
+
+    get title(): string {
+        return this._title; 
     }
 
     get totalQuantity(): number {
