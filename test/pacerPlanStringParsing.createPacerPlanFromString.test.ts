@@ -98,21 +98,24 @@ endNumber: 4
                     quantityType: "Pages",
                     quantities: [1, 2],
                     completed: true,
-                    scheduledDate: new Date(2024, 7, 19)
+                    scheduledDate: new Date(2024, 7, 19),
+                    additionalProperties: " ✅ 2024-08-19"
                 }),
                 new Task({
                     description: "Book",
                     quantityType: "Pages",
                     quantities: [3],
                     completed: false,
-                    scheduledDate: new Date(2024, 7, 20)
+                    scheduledDate: new Date(2024, 7, 20),
+                    additionalProperties: ""
                 }),
                 new Task({
                     description: "Book",
                     quantityType: "Pages",
                     quantities: [4],
                     completed: false,
-                    scheduledDate: new Date(2024, 7, 22)
+                    scheduledDate: new Date(2024, 7, 22),
+                    additionalProperties: ""
                 })
             ]
         }

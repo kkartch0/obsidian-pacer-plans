@@ -7,25 +7,29 @@ export class Task {
     scheduledDate: Date;
     completed: boolean;
     quantities: number[];
+    additionalProperties: string;
 
     constructor({
         description,
         quantityType,
         quantities,
         scheduledDate,
-        completed
+        completed,
+        additionalProperties
     }: {
         description: string;
         quantityType: string;
         quantities: number[];
         scheduledDate: Date;
         completed: boolean;
+        additionalProperties?: string;
     }) {
         this.description = description;
         this.quantityType = quantityType;
         this.quantities = quantities;
         this.scheduledDate = scheduledDate;
         this.completed = completed;
+        this.additionalProperties = additionalProperties ?? "";
     }
 
     /**
@@ -45,6 +49,6 @@ export class Task {
         const totalQuantity = this.quantities.length;
         const label = pluralize(this.quantityType, totalQuantity, false).toLowerCase();
 
-        return `${prefix} ${this.description} (${label} ${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}`;
+        return `${prefix} ${this.description} (${label} ${rangeString}) ⏳ ${this.scheduledDate.toISOString().slice(0, 10)}${this.additionalProperties}`;
     }
 }
