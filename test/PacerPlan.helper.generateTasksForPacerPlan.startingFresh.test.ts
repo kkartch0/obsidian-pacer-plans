@@ -130,7 +130,7 @@ describe("PacerPlan", () => {
             });
         });
 
-        it("generated tasks should take into account completed tasks' end points", () => {
+        it("generated tasks should take into account completed tasks' end points (extra points completed)", () => {
             // Arrange
             const plan = new PacerPlan({
                 title: "Book",
@@ -189,6 +189,71 @@ describe("PacerPlan", () => {
                     description: "Book",
                     quantityType: "Pages",
                     quantities: [9, 10],
+                    scheduledDate: new Date(2024, 7, 21),
+                    completed: false
+                }),
+            ]);
+        });
+
+        it("generated tasks should take into account completed tasks' end points (less points completed than suggested)", () => {
+            // Arrange
+            const plan = new PacerPlan({
+                title: "Book",
+                summary: "Read Book by Some Author",
+                quantityType: "Pages",
+                startDate: new Date(2024, 7, 19),
+                endDate: new Date(2024, 7, 21),
+                actionDays: Days.Everyday,
+                startNumber: 1,
+                endNumber: 10,
+                tasks: [
+                    new Task({
+                        description: "Book",
+                        quantityType: "Pages",
+                        quantities: [1],
+                        scheduledDate: new Date(2024, 7, 19),
+                        completed: true
+                    }),
+                    new Task({
+                        description: "Book",
+                        quantityType: "Pages",
+                        quantities: [4, 5, 6],
+                        scheduledDate: new Date(2024, 7, 20),
+                        completed: false
+                    }),
+                    new Task({
+                        description: "Book",
+                        quantityType: "Pages",
+                        quantities: [7, 8, 9, 10],
+                        scheduledDate: new Date(2024, 7, 21),
+                        completed: false
+                    })
+                ]
+            });
+
+            // Act
+            const result = generateTasksForPacerPlan(plan, { today: () => new Date(2024, 7, 19) });
+
+            // Assert
+            expect(result).toEqual([
+                new Task({
+                    description: "Book",
+                    quantityType: "Pages",
+                    quantities: [1],
+                    scheduledDate: new Date(2024, 7, 19),
+                    completed: true
+                }),
+                new Task({
+                    description: "Book",
+                    quantityType: "Pages",
+                    quantities: [2, 3, 4, 5, 6],
+                    scheduledDate: new Date(2024, 7, 20),
+                    completed: false
+                }),
+                new Task({
+                    description: "Book",
+                    quantityType: "Pages",
+                    quantities: [7, 8, 9, 10],
                     scheduledDate: new Date(2024, 7, 21),
                     completed: false
                 }),
