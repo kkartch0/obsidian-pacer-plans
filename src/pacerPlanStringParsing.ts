@@ -71,7 +71,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     // startPoint: 1
     // endPoint: 118
     // scheduledDate: 2024-08-19
-    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\) ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})/;
+    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\) ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})(?<additionalProperties>.*)/;
 
     const match = taskString.match(taskRegex);
 
@@ -84,7 +84,8 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
         description,
         startPointString,
         endPointString,
-        scheduledDateString
+        scheduledDateString,
+        additionalProperties
     } = match.groups!;
 
     const completed = status === "[x]";
@@ -106,7 +107,8 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
         quantityType,
         quantities,
         completed,
-        scheduledDate
+        scheduledDate,
+        additionalProperties
     });
 }
 
