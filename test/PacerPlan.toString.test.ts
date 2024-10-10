@@ -15,6 +15,7 @@ describe("PacerPlan", () => {
                 actionDays: Days.Monday | Days.Tuesday | Days.Thursday,
                 startNumber: 5,
                 endNumber: 19,
+                tags: ["work", "book"],
                 tasks: [
                     new Task({
                         description: "Book",
@@ -52,6 +53,9 @@ actionDays: MTR
 quantityType: Pages
 startNumber: 5
 endNumber: 19
+tags:
+  - work
+  - book
 ---
 - [x] Book (pages 5-9) ⏳ 2024-08-19
 - [ ] Book (pages 10-14) ⏳ 2024-08-20
