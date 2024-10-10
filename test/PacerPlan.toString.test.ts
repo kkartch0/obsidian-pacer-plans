@@ -22,21 +22,24 @@ describe("PacerPlan", () => {
                         quantityType: "Pages",
                         quantities: [5, 6, 7, 8, 9],
                         scheduledDate: new Date(2024, 7, 19),
-                        completed: true
+                        completed: true,
+                        tags: ["work", "book"],
                     }),
                     new Task({
                         description: "Book",
                         quantityType: "Pages",
                         quantities: [10, 11, 12, 13, 14],
                         scheduledDate: new Date(2024, 7, 20),
-                        completed: false
+                        completed: false,
+                        tags: ["work", "book"]
                     }),
                     new Task({
                         description: "Book",
                         quantityType: "Pages",
                         quantities: [15, 16, 17, 18, 19],
                         scheduledDate: new Date(2024, 7, 22),
-                        completed: false
+                        completed: false,
+                        tags: ["work", "book"]
                     })
                 ]
             });
@@ -57,9 +60,9 @@ tags:
   - work
   - book
 ---
-- [x] Book (pages 5-9) ⏳ 2024-08-19
-- [ ] Book (pages 10-14) ⏳ 2024-08-20
-- [ ] Book (pages 15-19) ⏳ 2024-08-22
+- [x] Book (pages 5-9) #work #book ⏳ 2024-08-19
+- [ ] Book (pages 10-14) #work #book ⏳ 2024-08-20
+- [ ] Book (pages 15-19) #work #book ⏳ 2024-08-22
 `);
         });
     });

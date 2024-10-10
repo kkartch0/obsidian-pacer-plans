@@ -68,4 +68,21 @@ describe("toString", () => {
             });
         });
     });
+
+    describe("when there are tags", () => {
+        it("returns the correct string representation", () => {
+            const task = new Task({
+                description: "Sample Task",
+                quantityType: "Pages",
+                quantities: [55, 56, 57, 58, 59, 60],
+                scheduledDate: new Date("2022-02-01"),
+                completed: false,
+                tags: ["work", "book"]
+            });
+
+            const result = task.toString();
+
+            expect(result).toEqual("- [ ] Sample Task (pages 55-60) #work #book ⏳ 2022-02-01");
+        });
+    });
 });

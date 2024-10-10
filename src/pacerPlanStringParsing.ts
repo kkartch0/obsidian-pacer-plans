@@ -51,7 +51,7 @@ export function createPacerPlanFromString(
 
     metadataLines.forEach(applyMetadataLineToPacerPlan.bind(null, plan));
 
-    plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType));
+    plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType, plan.tags));
 
     return plan;
 }
@@ -62,7 +62,7 @@ export function createPacerPlanFromString(
  * @param taskString - The task string to parse.
  * @returns A Task object created from the task string.
  */
-export function createTaskFromTaskString(taskString: string, quantityType: string): Task {
+export function createTaskFromTaskString(taskString: string, quantityType: string, tags: string[]): Task {
 
     // regex to match the task string
     // - [x] Getting Things Done (pages 1-118) ⏳ 2024-08-19
@@ -71,7 +71,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     // startPoint: 1
     // endPoint: 118
     // scheduledDate: 2024-08-19
-    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\) ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})(?<additionalProperties>.*)/;
+    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\)(?<tagsString>.+)? ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})(?<additionalProperties>.*)/;
 
     const match = taskString.match(taskRegex);
 
@@ -108,6 +108,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
         quantities,
         completed,
         scheduledDate,
+        tags,
         additionalProperties
     });
 }
