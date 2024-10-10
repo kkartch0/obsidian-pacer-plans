@@ -49,6 +49,8 @@ export function createPacerPlanFromString(
     const taskStrings = lines.slice(lines.indexOf("---", 1) + 1)
         .filter(line => line.trim().length > 0);
 
+    plan.tags = getTagsFromPlanString(planString);
+
     metadataLines.forEach(applyMetadataLineToPacerPlan.bind(null, plan));
 
     plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType, plan.tags));
@@ -146,4 +148,35 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
             plan.endNumber = parseInt(value);
             break;
     }
+}
+
+function getTagsFromPlanString(planString: string): string[] {
+    // tags
+    //   - work
+    //   - book
+
+    const tagsRegex = /^tags:$/;
+    const tagRegex = /^\s+-\s+(?<tag>.+)$/;
+    const lines = planString.split("\n");
+
+    let tags: string[] = [];
+
+    let tagsFound = false;
+    for (let line of lines) {
+        if (tagsFound) {
+            const match = line.match(tagRegex);
+            if (match) {
+                tags.push(match.groups!.tag);
+            } else {
+                break;
+            }
+        } else {
+            const match = line.match(tagsRegex);
+            if (match) {
+                tagsFound = true;
+            }
+        }
+    }
+
+    return tags;
 }
