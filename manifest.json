@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-pacer-plans",
 	"name": "Pacer Plans",
-	"version": "0.4.2",
+	"version": "0.5.0",
 	"minAppVersion": "0.15.0",
 	"description": "Reading a book? Writing a paper? Studying for a test? Pacer Plans helps you average out your work into a series of equal tasks over a specified time period. Miss a day or two? No problem! Simply recalculate the Pacer Plan to automatically adjust your remaining tasks and keep you on track.",
 	"author": "Ky Kartchner",
