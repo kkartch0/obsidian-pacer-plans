@@ -49,9 +49,11 @@ export function createPacerPlanFromString(
     const taskStrings = lines.slice(lines.indexOf("---", 1) + 1)
         .filter(line => line.trim().length > 0);
 
+    plan.tags = getTagsFromPlanString(planString);
+
     metadataLines.forEach(applyMetadataLineToPacerPlan.bind(null, plan));
 
-    plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType));
+    plan.tasks = taskStrings.map(t => createTaskFromTaskString(t, plan.quantityType, plan.tags));
 
     return plan;
 }
@@ -62,7 +64,7 @@ export function createPacerPlanFromString(
  * @param taskString - The task string to parse.
  * @returns A Task object created from the task string.
  */
-export function createTaskFromTaskString(taskString: string, quantityType: string): Task {
+export function createTaskFromTaskString(taskString: string, quantityType: string, tags: string[]): Task {
 
     // regex to match the task string
     // - [x] Getting Things Done (pages 1-118) ⏳ 2024-08-19
@@ -71,7 +73,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
     // startPoint: 1
     // endPoint: 118
     // scheduledDate: 2024-08-19
-    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\) ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})(?<additionalProperties>.*)/;
+    const taskRegex = /^- (?<status>\[.\]) (?<description>.+) \(.*?(?<startPointString>\d+)(-(?<endPointString>\d+))?\)(?<tagsString>.+)? ⏳ (?<scheduledDateString>\d{4}-\d{2}-\d{2})(?<additionalProperties>.*)/;
 
     const match = taskString.match(taskRegex);
 
@@ -108,6 +110,7 @@ export function createTaskFromTaskString(taskString: string, quantityType: strin
         quantities,
         completed,
         scheduledDate,
+        tags,
         additionalProperties
     });
 }
@@ -145,4 +148,35 @@ export function applyMetadataLineToPacerPlan(plan: PacerPlan, line: string): voi
             plan.endNumber = parseInt(value);
             break;
     }
+}
+
+function getTagsFromPlanString(planString: string): string[] {
+    // tags
+    //   - work
+    //   - book
+
+    const tagsRegex = /^tags:$/;
+    const tagRegex = /^\s+-\s+(?<tag>.+)$/;
+    const lines = planString.split("\n");
+
+    let tags: string[] = [];
+
+    let tagsFound = false;
+    for (let line of lines) {
+        if (tagsFound) {
+            const match = line.match(tagRegex);
+            if (match) {
+                tags.push(match.groups!.tag);
+            } else {
+                break;
+            }
+        } else {
+            const match = line.match(tagsRegex);
+            if (match) {
+                tagsFound = true;
+            }
+        }
+    }
+
+    return tags;
 }

@@ -76,7 +76,8 @@ export function generateTasksForPacerPlan(plan: PacerPlan, dateProvider: IDatePr
             quantityType: plan.quantityType,
             quantities,
             scheduledDate: currentDate,
-            completed: false
+            completed: false,
+            tags: plan.tags,
         }));
 
         currentPoint += currentTaskQuantityToAssign;

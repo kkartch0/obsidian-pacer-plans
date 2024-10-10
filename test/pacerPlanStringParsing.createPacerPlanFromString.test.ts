@@ -20,7 +20,6 @@ endNumber: 19
 - [ ] Book (pages 15-19) ⏳ 2024-08-22
 `;
 
-
         // Act
         const result = createPacerPlanFromString(planTitle, planContent);
 
@@ -121,5 +120,24 @@ endNumber: 4
         }
         );
         expect(result).toEqual(expectedPlan);
+    });
+
+    it("when plan has tags: should create a PacerPlan object from a string representation", () => {
+        const planTitle = "Book";
+        const planContent = `---
+summary: Read Book by Author
+startDate: 2024-08-19
+endDate: 2024-08-23
+actionDays: MTR
+quantityType: Pages
+startNumber: 1
+endNumber: 4
+tags:
+  - work
+  - book
+---
+- [x] Book (pages 1-2) #work #book ⏳ 2024-08-19
+- [ ] Book (page 3) #work #book ⏳ 2024-08-20
+`;
     });
 });

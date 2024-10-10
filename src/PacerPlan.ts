@@ -8,11 +8,12 @@ export class PacerPlan {
     startDate: Date;
     endDate: Date;
     actionDays: Days;
+    quantityType: string;
     startNumber: number;
     endNumber: number;
+    tags: string[];
 
     tasks: Task[];
-    quantityType: string;
 
     constructor(
         {
@@ -24,7 +25,8 @@ export class PacerPlan {
             startNumber,
             endNumber,
             tasks,
-            quantityType
+            quantityType,
+            tags,
         }: {
             title?: string,
             summary?: string,
@@ -34,7 +36,8 @@ export class PacerPlan {
             startNumber?: number,
             endNumber?: number,
             tasks?: Task[],
-            quantityType?: string
+            quantityType?: string,
+            tags?: string[],
         } = {}) {
         this._title = sanitizeForFileName(title || "");
         this.summary = summary || "";
@@ -45,6 +48,7 @@ export class PacerPlan {
         this.endNumber = endNumber || 0;
         this.quantityType = quantityType || "";
         this.tasks = tasks || [];
+        this.tags = tags || [];
     }
 
     set title(value: string) {
@@ -52,7 +56,7 @@ export class PacerPlan {
     }
 
     get title(): string {
-        return this._title; 
+        return this._title;
     }
 
     get totalQuantity(): number {
@@ -70,8 +74,19 @@ actionDays: ${daysToShortString(this.actionDays)}
 quantityType: ${this.quantityType}
 startNumber: ${this.startNumber}
 endNumber: ${this.endNumber}
+tags:${this.getTagsString()}
 ---
 ${tasksString}
 `;
+    }
+
+    private getTagsString(): string {
+        let tagsString = this.tags.map(tag => `  - ${tag}`).join("\n");
+
+        if (this.tags.length > 0) {
+            tagsString = "\n" + tagsString;
+        }
+
+        return tagsString;
     }
 }
